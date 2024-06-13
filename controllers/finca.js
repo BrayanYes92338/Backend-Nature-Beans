@@ -1,0 +1,1 @@
+import Finca from "../models/finca";
