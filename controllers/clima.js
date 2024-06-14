@@ -1,0 +1,1 @@
+import clima from "../modals/clima"
