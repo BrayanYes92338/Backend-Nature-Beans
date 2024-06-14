@@ -8,11 +8,11 @@ import helperUsuario from '../helpers/usuario.js'
 
 const router = Router()
 
-router.get('/',[
+router.get('/listar',[
     validarCampos
   ],httpUsuarios. getUsuarios)
 
-  router.get('/listar/:id',[
+  router.get('/listarid/:id',[
     validarCampos
   ],  httpUsuarios.getUsuariosID)
   
@@ -24,9 +24,9 @@ router.get('/',[
     validarCampos
   ],  httpUsuarios.getUsuariosInactivo)
 
-router.post('/', [
+router.post('/agregar', [
     check('nombre', 'El nombre no puede estar vacio').notEmpty(),
-    check('direccion', 'La sdireccion no puede estar vacia').notEmpty(),
+    check('direccion', 'La direccion no puede estar vacia').notEmpty(),
     check('documento', 'El documento no puede estar vacio').notEmpty(),
     check('documento').custom(helperUsuario.documentoUnico),
     check('correo', 'El correo no puede estar vacio').notEmpty(),
@@ -38,7 +38,7 @@ router.post('/', [
     validarCampos
 ], httpUsuarios.postUsuarios)
 
-router.put('/:id', [
+router.put('/editar/:id', [
     check('id', 'Se necesita un mongoid valido').isMongoId(),
     check('id').custom(helperUsuario.validarExistaUsuarioId),
     validarCampos
@@ -50,7 +50,8 @@ router.put('/activar/:id',[
     validarCampos 
   ], httpUsuarios.putUsuariosActivar)
   
-  router.put('/desactivar/:id',[
+  router.put('/desactivar/:id',[ 
+    validarJWT,
     check('id', "Se nesecita un mongoid valido").isMongoId(),
     check('id').custom(helperUsuario.validarExistaUsuarioId),
     validarCampos 
