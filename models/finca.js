@@ -14,7 +14,8 @@ const fincaSchema = new mongoose.Schema({
     departamento:{type:String,required:true},
     direccion:{type:String,required:true},
     ubicacion:{type:String,required:true},
-    area:{type:String,required:true}
+    area:{type:String,required:true},
+    estado:{type:Number,default:1}
 })
 
 
