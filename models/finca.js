@@ -6,10 +6,10 @@ const fincaSchema = new mongoose.Schema({
     ruc:{type:Number,required:true},
     ciudad:{type:String,required:true},
     limites:[{
-        norte:{type:String,required:true},
-        sur:{type:String,required:true},
-        este:{type:String,required:true},
-        oeste:{type:String,required:true},
+        norte:{type:String,default:""},
+        sur:{type:String,default:""},
+        este:{type:String,default:""},
+        oeste:{type:String,default:""},
     }],
     departamento:{type:String,required:true},
     direccion:{type:String,required:true},
@@ -18,5 +18,4 @@ const fincaSchema = new mongoose.Schema({
     estado:{type:Number,default:1}
 })
 
-
-export default mongoose.model("Finca",fincaSchema)
+export default mongoose.model('Finca',fincaSchema);
