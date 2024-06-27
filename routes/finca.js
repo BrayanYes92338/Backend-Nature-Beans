@@ -9,6 +9,15 @@ const router = Router()
 router.get('/listar', [
     validarCampos
 ], httpFinca.getFinca)
+router.get('/listarID/:id',[
+    validarCampos
+], httpFinca.getFincaID)
+router.get('/activas', [
+    validarCampos
+], httpFinca.getFincaActiva)
+router.get('/inactivas', [
+    validarCampos
+], httpFinca.getFincaInactiva)
 router.post('/agregar', [
     check('idUsuario', 'El id del Usuario no puede estar vacio').notEmpty(),
     check('nombre', 'El nombre no puede estar vacio').notEmpty(),
