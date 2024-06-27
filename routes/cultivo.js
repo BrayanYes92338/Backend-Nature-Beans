@@ -9,21 +9,17 @@ import helperCultivo from "../helpers/cultivo.js";
 const router = Router();
 
 router.get("/lista", [validarCampos], httpCultivo.getCultivo);
-router.get("/lista/activos", [validarCampos], httpCultivo.getCultivoActivo);
-router.get("/lista/inactivos", [validarCampos], httpCultivo.getCultivoActivo);
-router.post(
-  "/agregar",
-  [
+router.get("/activos", [validarCampos], httpCultivo.getCultivoActivo);
+router.get("/inactivos", [validarCampos], httpCultivo.getCultivoActivo);
+router.post("/agregar", [
     check("Nombre", "El nombre no puede estar vacio").notEmpty(),
     check("tipo", "El tipo no puede estar vacio").notEmpty(),
     check("idParcela", "El id de la Parcela no puede estar vacio").notEmpty(),
-
     validarCampos,
   ],
   httpCultivo.postCultivo
 );
-router.put(
-  "/editar/:_id",
+router.put( "/editar/:id",
   [
     check("_id", "Se necesita un mongoid valido").isMongoId(),
     check("_id").custom(helperCultivo.validarExistaCultivoId),
