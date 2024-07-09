@@ -5,6 +5,7 @@ const nominaSchema=new mongoose.Schema({
     fecha:{type:Date, default:Date.now},
     tipo:{type:String,required:true},
     valor:{type:Number,required:true},
+    estado:{type:Number,default:1}
 })
 
 export default mongoose.model("Nomina",nominaSchema)
