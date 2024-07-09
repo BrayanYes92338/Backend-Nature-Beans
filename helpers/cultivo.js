@@ -5,7 +5,7 @@ const helperCultivo ={
     validarExistaCultivoId: async (id) => {
         const existe = await Cultivo.findById(id);
         if (existe == undefined) {
-          throw new Error("Id del Cultivo no existe");
+          throw new Error("Id del regisrtro del Cultivo no existe");
         }
       },
 

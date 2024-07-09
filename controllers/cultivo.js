@@ -1,15 +1,12 @@
 import Cultivo from "../models/cultivo.js";
 
 const httpCultivo = {
-//   getCultivo: async (req, res) => {
-//     const { buscar } = req.query;
-//     const cultivo = await Cultivo.find({
-//       $or: [{}],
-//     });
-//     res.json({});
-//   },
+
   getCultivo: async (req, res) => {
-    const cultivo = await Cultivo.find();
+    const { buscar } = req.query;
+    const cultivo = await Cultivo.find({
+      $or: [{ nombre: new RegExp(buscar, "i") }],
+    });
     res.json({ cultivo });
   },
   getCultivoID: async (req, res) => {
@@ -36,18 +33,8 @@ const httpCultivo = {
   },
   postCultivo: async (req, res) => {
     try {
-      const {
-        Nombre,
-        tipo,
-        idParcela
-      } = req.body;
-
-      const cultivo = new Cultivo({
-        Nombre,
-        tipo,
-        idParcela
-      });
-
+      const {nombre, tipo, idParcela} = req.body;
+      const cultivo = new Cultivo({nombre, tipo, idParcela});
       await cultivo.save();
       res.json({ cultivo });
     } catch (error) {
@@ -56,31 +43,20 @@ const httpCultivo = {
     }
   },
   putCultivo: async (req, res) => {
-    const { _id } = req.params;
+    const { id } = req.params;
     const { nombre, ...resto } = req.body;
-    const cultivo = await Cultivo.findByIdAndUpdate(
-      _id,
-      { nombre, ...resto },
-      { new: true }
-    );
+    const cultivo = await Cultivo.findByIdAndUpdate(id,{ nombre, ...resto }, { new: true });
     res.json({ cultivo });
   },
   putCultivoaActivar: async (req, res) => {
     const { id } = req.params;
-    const cultivo = await Cultivo.findByIdAndUpdate(
-      id,
-      { estado: 1 },
-      { new: true }
-    );
+    const cultivo = await Cultivo.findByIdAndUpdate( id,  { estado: 1 },{ new: true });
     res.json({ cultivo });
   },
   putCultivoDesactivar: async (req, res) => {
     const { id } = req.params;
     const cultivo = await Cultivo.findByIdAndUpdate(
-      id,
-      { estado: 0 },
-      { new: true }
-    );
+      id, { estado: 0 },{ new: true } );
     res.json({ cultivo });
   }
  

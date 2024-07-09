@@ -1,12 +1,12 @@
-import Empleado from "../models/empleados.js";
+import Empleado from "../models/empleado.js";
 
 const httpEmpleados = {
   getEmpleados: async (req, res) => {
     const { buscar } = req.query;
     const empleado = await Empleado.find({
-      $or: [{}],
+      $or:[{nombre: new RegExp(buscar, "i")}]
     });
-    res.json({});
+    res.json({empleado});
   },
   getEmpleadoActivo: async (req, res) => {
     try {
@@ -36,26 +36,8 @@ const httpEmpleados = {
   },
   postEmpleado: async (req, res) => {
     try {
-      const {
-        nombre,
-        documento,
-        correo,
-        direccion,
-        telefono,
-        estudios,
-        descripcion,
-      } = req.body;
-
-      const empleado = new Empleado({
-        nombre,
-        documento,
-        correo,
-        direccion,
-        telefono,
-        estudios,
-        descripcion,
-      });
-
+      const {nombre,documento,correo,direccion,telefono,estudios,descripcion } = req.body;
+      const empleado = new Empleado({nombre,documento,correo,direccion,telefono,estudios,descripcion });
       await empleado.save();
       res.json({ empleado });
     } catch (error) {
@@ -64,30 +46,23 @@ const httpEmpleados = {
     }
   },
   putEmpleado: async (req, res) => {
-    const { _id } = req.params;
+    const { id } = req.params;
     const { nombre, ...resto } = req.body;
     const empleado = await Empleado.findByIdAndUpdate(
-      _id,
-      { nombre, ...resto },
-      { new: true }
-    );
+      id, { nombre, ...resto },{ new: true } );
     res.json({ empleado });
   },
   putEmpleadoActivar: async (req, res) => {
     const { id } = req.params;
     const empleado = await Empleado.findByIdAndUpdate(
-      id,
-      { estado: 1 },
-      { new: true }
+      id, { estado: 1 }, { new: true }
     );
     res.json({ empleado });
   },
   putEmpleadoDesactivar: async (req, res) => {
     const { id } = req.params;
     const empleado = await Empleado.findByIdAndUpdate(
-      id,
-      { estado: 0 },
-      { new: true }
+      id, { estado: 0 }, { new: true }
     );
     res.json({ empleado });
   },
