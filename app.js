@@ -6,6 +6,10 @@ import proveedor from "./routes/proveedor.js"
 import finca from "./routes/finca.js"
 import empleado from "./routes/empleado.js"
 import cultivo from "./routes/cultivo.js"
+import clima from "./routes/clima.js"
+import empleado from "./routes/empleado.js"
+import nomina from "./routes/nomina.js"
+
 
 
 const app = express()
@@ -15,6 +19,10 @@ app.use("/api/proveedor", proveedor)
 app.use('/api/fincas', finca)
 app.use('/api/empleado', empleado)
 app.use('/api/cultivo', cultivo)
+app.use("/api/clima",clima)
+app.use("/api/empleado",empleado)
+app.use("/api/nomina",nomina)
+
 
 
 
