@@ -56,4 +56,4 @@ const httpFinca ={
 
 }
 
-export default httpFinca
+export default httpFinca;
