@@ -6,8 +6,13 @@ const httpCultivo = {
     const { buscar } = req.query;
     const cultivo = await Cultivo.find({
       $or: [{ nombre: new RegExp(buscar, "i") }],
-    });
-    res.json({ cultivo });
+    })
+    
+    .populate({
+      path:'idParcela'
+     }) 
+
+     res.json({ cultivo })
   },
   getCultivoID: async (req, res) => {
     const { id } = req.params;

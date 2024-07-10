@@ -12,7 +12,7 @@ router.get("/lista", [validarCampos], httpCultivo.getCultivo);
 router.get("/activos", [validarCampos], httpCultivo.getCultivoActivo);
 router.get("/inactivos", [validarCampos], httpCultivo.getCultivoActivo);
 router.post("/agregar", [
-    check("Nombre", "El nombre no puede estar vacio").notEmpty(),
+    check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("tipo", "El tipo no puede estar vacio").notEmpty(),
     check("idParcela", "El id de la Parcela no puede estar vacio").notEmpty(),
     validarCampos,
@@ -21,8 +21,8 @@ router.post("/agregar", [
 );
 router.put( "/editar/:id",
   [
-    check("_id", "Se necesita un mongoid valido").isMongoId(),
-    check("_id").custom(helperCultivo.validarExistaCultivoId),
+    check("id", "Se necesita un mongoid valido").isMongoId(),
+    check("id").custom(helperCultivo.validarExistaCultivoId),
     validarCampos,
   ],
   httpCultivo.putCultivo
