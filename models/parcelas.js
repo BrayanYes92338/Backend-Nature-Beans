@@ -6,10 +6,10 @@ const ParcelasSchema = new mongoose.Schema({
     ubicacion:{type:String,required:true},
     numero:{type:Number,required:true, unique:true},
     cultivoAnterior:{type:String,required:true},
-    cultivoActual:{type:Number,required:true},
+    cultivoActual:{type:String,required:true},
     detalle:{type:String,required:true},
-    area:{type:Number,required:true},
-    estado:{type:Number,default:0}
+    area:{type:String,required:true},
+    estado:{type:Number,default:1}
 })
 
 

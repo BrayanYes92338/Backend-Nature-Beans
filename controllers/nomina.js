@@ -1,5 +1,4 @@
 import Nomina from "../models/nomina.js";
-import Empleado from "../models/empleados.js";
 
 
 
