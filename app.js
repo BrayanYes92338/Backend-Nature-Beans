@@ -11,6 +11,7 @@ import clima from "./routes/clima.js"
 import nomina from "./routes/nomina.js"
 import parcela from "./routes/parcela.js"
 import proceso from "./routes/proceso.js"
+import sustrato from "./routes/elaboracionSustrato.js"
 
 
 
@@ -28,6 +29,7 @@ app.use("/api/clima",clima)
 app.use("/api/nomina",nomina)
 app.use("/api/parcela",parcela)
 app.use("/api/proceso",proceso)
+app.use("/api/sustrato",sustrato)
 
 
 
