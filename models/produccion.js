@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const ProduccionSchema = new mongoose.Schema({
     idCultivo:{ type: mongoose.Schema.Types.ObjectId, ref: 'Cultivo', required: true },
-    numLote:{type: String,required:true},
+    numLote:{type: String,required:true,unique:true},
     producto:{type: String,required:true},
     cantidad:{type: Number,required:true},
     cantidadTrabajadores:{type: Number,required:true},
