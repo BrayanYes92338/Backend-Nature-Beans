@@ -10,7 +10,7 @@ const router = Router()
 
 router.get('/listar',[
     validarCampos
-  ],httpUsuarios. getUsuarios)
+  ],httpUsuarios.getUsuarios)
 
   router.get('/listarid/:id',[
     validarCampos
