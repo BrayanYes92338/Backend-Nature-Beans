@@ -13,6 +13,7 @@ import parcela from "./routes/parcela.js"
 import proceso from "./routes/proceso.js"
 import sustrato from "./routes/elaboracionSustrato.js"
 import riego from "./routes/riego.js"
+import controlPlaga from "./routes/controlPlagas.js"
 
 
 
@@ -32,6 +33,8 @@ app.use("/api/parcela",parcela)
 app.use("/api/proceso",proceso)
 app.use("/api/sustrato",sustrato)
 app.use("/api/riego",riego)
+app.use("/api/controlPlaga",controlPlaga)
+
 
 
 
