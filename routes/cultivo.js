@@ -15,7 +15,7 @@ router.post("/agregar", [
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("tipo", "El tipo no puede estar vacio").notEmpty(),
     check("idParcela", "El id de la Parcela no puede estar vacio").notEmpty(),
-    validarCampos,
+    validarCampos
   ],
   httpCultivo.postCultivo
 );
