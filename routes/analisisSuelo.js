@@ -34,7 +34,6 @@ analisis.put(
     check("idEmpleado", "El ID del empleado no puede estar vacío").notEmpty(),
     check("muestra", "El campo muestra no puede estar vacío").notEmpty(),
     check("laboratorio", "El campo laboratorio no puede estar vacío").notEmpty(),
-    check("resultados").isArray().withMessage("Los resultados deben ser un array"),
     check("id", "Se necesita un mongoid valido").isMongoId(), 
   ],
   httpAnalisisSuelo.putAnalisis

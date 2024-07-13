@@ -27,9 +27,7 @@ preparacion.post(
   [
     check("idParcela", "El ID de la parcela no puede estar vacío").notEmpty(),
     check("operario", "El ID del operario no puede estar vacío").notEmpty(),
-    check("productos")
-      .isArray()
-      .withMessage("Los productos deben ser un arreglo"),
+
     check(
       "productos.*.ingredienteActivo",
       "El ingrediente activo es requerido"
@@ -54,9 +52,6 @@ preparacion.put(
   [
     check("idParcela", "El ID de la parcela no puede estar vacío").notEmpty(),
     check("operario", "El ID del operario no puede estar vacío").notEmpty(),
-    check("productos")
-      .isArray()
-      .withMessage("Los productos deben ser un arreglo"),
     check(
       "productos.*.ingredienteActivo",
       "El ingrediente activo es requerido"
