@@ -14,6 +14,10 @@ import proceso from "./routes/proceso.js"
 import produccion from "./routes/produccion.js"
 import analisis from "./routes/analisisSuelo.js"
 import preparacion from "./routes/preparacionSuelo.js"
+import sustrato from "./routes/elaboracionSustrato.js"
+import riego from "./routes/riego.js"
+import controlPlaga from "./routes/controlPlagas.js"
+
 
 const app = express()
 app.use(express.json())
@@ -31,6 +35,9 @@ app.use("/api/proceso",proceso)
 app.use("/api/produccion",produccion)
 app.use("/api/analisis",analisis)
 app.use("/api/preparacion",preparacion)
+app.use("/api/sustrato",sustrato)
+app.use("/api/riego",riego)
+app.use("/api/controlPlaga",controlPlaga)
 
 
 
