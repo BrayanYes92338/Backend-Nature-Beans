@@ -12,9 +12,8 @@ import nomina from "./routes/nomina.js"
 import parcela from "./routes/parcela.js"
 import proceso from "./routes/proceso.js"
 import produccion from "./routes/produccion.js"
-
-
-
+import analisis from "./routes/analisisSuelo.js"
+import preparacion from "./routes/preparacionSuelo.js"
 
 const app = express()
 app.use(express.json())
@@ -30,6 +29,10 @@ app.use("/api/nomina",nomina)
 app.use("/api/parcela",parcela)
 app.use("/api/proceso",proceso)
 app.use("/api/produccion",produccion)
+app.use("/api/analisis",analisis)
+app.use("/api/preparacion",preparacion)
+
+
 
 
 
