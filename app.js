@@ -11,6 +11,10 @@ import clima from "./routes/clima.js"
 import nomina from "./routes/nomina.js"
 import parcela from "./routes/parcela.js"
 import proceso from "./routes/proceso.js"
+import analisis from "./routes/analisisSuelo.js"
+import preparacion from "./routes/preparacionSuelo.js"
+
+
 
 
 
@@ -28,6 +32,10 @@ app.use("/api/clima",clima)
 app.use("/api/nomina",nomina)
 app.use("/api/parcela",parcela)
 app.use("/api/proceso",proceso)
+app.use("/api/analisis",analisis)
+app.use("/api/preparacion",preparacion)
+
+
 
 
 

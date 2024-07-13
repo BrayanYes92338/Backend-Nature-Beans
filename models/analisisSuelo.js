@@ -10,4 +10,4 @@ const analisisSueloSchema=new mongoose.Schema({
     createdAt:{type:Date,default:Date.now},
 })
 
-export default mongoose.model("AnalisisSuelo",analisisSueloSchema)
+export default mongoose.model("AnalisisSuelo",analisisSueloSchema)         
