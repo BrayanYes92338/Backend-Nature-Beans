@@ -2,10 +2,12 @@ import analisisSuelo from "../models/analisisSuelo.js";
 
 const httpAnalisisSuelo = {
   getAnalisis: async (req, res) => {
-    const Analisis = await analisisSuelo
-      .find()
-      .populate("idParcela")
-      .populate("idEmpleado");
+    const {buscar} = req.query;
+    const Analisis = await analisisSuelo.find({
+        $or: [{muestra: new RegExp(buscar,"i")}]
+      })
+      .populate({path:"idParcela"})
+      .populate({path:"idEmpleado"});
     res.json({ Analisis });
   },
   getAnalisisId: async (req, res) => {
@@ -61,24 +63,8 @@ const httpAnalisisSuelo = {
   },
   postAnalisis: async (req, res) => {
     try {
-      const {
-        idParcela,
-        idEmpleado,
-        muestra,
-        cultivo,
-        laboratorio,
-        resultados,
-        recomendaciones,
-      } = req.body;
-      const analisis = new analisisSuelo({
-        idParcela,
-        idEmpleado,
-        muestra,
-        cultivo,
-        laboratorio,
-        resultados,
-        recomendaciones,
-      });
+      const {idParcela,idEmpleado, muestra,cultivo,laboratorio,resultados,recomendaciones } = req.body;
+      const analisis = new analisisSuelo({idParcela,idEmpleado, muestra,cultivo,laboratorio,resultados,recomendaciones});
 
       await analisis.save();
       res.json({ analisis });
