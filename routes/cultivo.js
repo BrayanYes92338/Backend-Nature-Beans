@@ -8,7 +8,7 @@ import helperCultivo from "../helpers/cultivo.js";
 
 const router = Router();
 
-router.get("/lista", [validarCampos], httpCultivo.getCultivo);
+router.get("/listar", [validarCampos], httpCultivo.getCultivo);
 router.get("/activos", [validarCampos], httpCultivo.getCultivoActivo);
 router.get("/inactivos", [validarCampos], httpCultivo.getCultivoActivo);
 router.post("/agregar", [

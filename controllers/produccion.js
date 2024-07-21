@@ -5,6 +5,8 @@ const httpProduccion = {
         const { busqueda } = req.query;
         const produccion = await Produccion.find({
             $or: [{ numLote: new RegExp(busqueda, "i") }]
+        })  .populate({
+            path: 'idCultivo'
         });
         res.json({ produccion })
     },
