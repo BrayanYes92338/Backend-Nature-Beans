@@ -9,18 +9,26 @@ import helperUsuario from '../helpers/usuario.js'
 const router = Router()
 
 router.get('/listar',[
+  validarJWT,
+  validarRol(["ADMIN"]),
     validarCampos
   ],httpUsuarios.getUsuarios)
 
   router.get('/listarid/:id',[
+    validarJWT,
+    validarRol(["ADMIN"]),
     validarCampos
   ],  httpUsuarios.getUsuariosID)
   
   router.get('/activos',[
+    validarJWT,
+    validarRol(["ADMIN"]),
     validarCampos
   ],  httpUsuarios.getUsuariosActivo)
   
   router.get('/inactivos',[
+    validarJWT,
+    validarRol(["ADMIN"]),
     validarCampos
   ],  httpUsuarios.getUsuariosInactivo)
 
@@ -39,12 +47,16 @@ router.post('/agregar', [
 ], httpUsuarios.postUsuarios)
 
 router.put('/editar/:id', [
+  validarJWT,
+  validarRol(["ADMIN"]),
     check('id', 'Se necesita un mongoid valido').isMongoId(),
     check('id').custom(helperUsuario.validarExistaUsuarioId),
     validarCampos
 ], httpUsuarios.putUsuarios)
 
 router.put('/activar/:id',[
+  validarJWT,
+  validarRol(["ADMIN"]),
     check('id', "Se nesecita un mongoid valido").isMongoId(),
     check('id').custom(helperUsuario.validarExistaUsuarioId),
     validarCampos 
@@ -52,6 +64,7 @@ router.put('/activar/:id',[
   
   router.put('/desactivar/:id',[ 
     validarJWT,
+    validarRol(["ADMIN"]),
     check('id', "Se nesecita un mongoid valido").isMongoId(),
     check('id').custom(helperUsuario.validarExistaUsuarioId),
     validarCampos 
