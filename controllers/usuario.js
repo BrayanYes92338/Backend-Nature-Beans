@@ -1,5 +1,5 @@
 import Usuario from "../models/usuario.js"
-import { generarJWT } from '../middleware/validar-jwt.js'
+import { generarJWT } from "../middleware/validar-jwt.js";
 import bcryptjs from 'bcryptjs'
 
 const httpUsuarios = {
@@ -15,6 +15,12 @@ const httpUsuarios = {
         const usuario = await Usuario.findById(id);
         res.json({ usuario });
     },
+ 
+    getUsuarioAdmin: async (req, res) =>{
+      const usuario = await Usuario.find({rol: "ADMIN"})
+      res.json({ usuario })
+    },
+
     getUsuariosActivo: async (req, res) => {
         const usuarios = await Usuario.find({ estado: 1 })
         res.json({ usuarios })
@@ -79,11 +85,11 @@ const httpUsuarios = {
                 })
               }
         
-              const token = await generarJWT(user._id);
+              const token = await generarJWT(user._id); // Generación del token JWT
               res.json({
-                usuario: user,
-                token
-              })  
+                  usuario: user,
+                  token
+              });
 
         }catch(error){
             return res.status(500).json({

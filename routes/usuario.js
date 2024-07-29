@@ -2,7 +2,7 @@ import {Router} from 'express'
 import { check } from 'express-validator'
 import { validarCampos } from '../middleware/validar-campos.js'
 import { validarJWT } from '../middleware/validar-jwt.js'
-import { validarRol } from '../middleware/validar-rol.js'
+import { validarRol } from "../middleware/validar-rol.js";
 import httpUsuarios from '../controllers/usuario.js'
 import helperUsuario from '../helpers/usuario.js'
 
@@ -19,6 +19,12 @@ router.get('/listar',[
     validarRol(["ADMIN"]),
     validarCampos
   ],  httpUsuarios.getUsuariosID)
+
+  router.get('/listarRol', [
+    validarJWT,
+    validarRol(["ADMIN"]),
+    validarCampos
+  ], httpUsuarios.getUsuarioAdmin)
   
   router.get('/activos',[
     validarJWT,
