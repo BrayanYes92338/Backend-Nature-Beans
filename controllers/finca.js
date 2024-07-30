@@ -45,13 +45,13 @@ const httpFinca ={
     },
     putFincaActivas: async (req, res) =>{
         const {id}= req.params;
-        const fincas = await Finca.findByIdAndUpdate(id, {estado:1}, {new: true})
-        res.json({fincas})
+        const finca = await Finca.findByIdAndUpdate(id, {estado:1}, {new: true})
+        res.json({finca})
     },
     putFincasInactivas: async (req, res)=>{
         const {id}= req.params;
-        const fincas = await Finca.findByIdAndUpdate(id, {estado:0}, {new: true})
-        res.json({fincas})
+        const finca = await Finca.findByIdAndUpdate(id, {estado:0}, {new: true})
+        res.json({finca})
     }
 
 }

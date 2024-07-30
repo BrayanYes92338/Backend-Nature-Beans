@@ -9,12 +9,12 @@ const router = Router()
 
 router.get('/listar', [
     validarJWT,
-    validarRol(["ADMIN","GESTOR"]),
+    validarRol(["ADMIN", "GESTOR"]),
     validarCampos
 ], httpFinca.getFinca)
 router.post('/agregar', [
     validarJWT,
-    validarRol(["ADMIN","GESTOR"]),
+    validarRol(["ADMIN", "GESTOR"]),
     check('idUsuario', 'El id del Usuario no puede estar vacio').notEmpty(),
     check('nombre', 'El nombre no puede estar vacio').notEmpty(),
     check('ruc', 'El RUC no puede estar vacio').notEmpty(),
@@ -27,21 +27,21 @@ router.post('/agregar', [
 ], httpFinca.postFinca)
 router.put('/editar/:id',[
     validarJWT,
-    validarRol(["ADMIN","GESTOR"]),
+    validarRol(["ADMIN", "GESTOR"]),
     check('id', 'Se necesita un mongoID que sea valido').isMongoId(),
     check('id').custom(helperFinca.validarFincaID),
     validarCampos
 ], httpFinca.putFinca)
 router.put('/activar/:id',[
     validarJWT,
-    validarRol(["ADMIN","GESTOR"]),
+    validarRol(["ADMIN", "GESTOR"]),
     check('id', 'Se necesita un mongoID que sea valido').isMongoId(),
     check('id').custom(helperFinca.validarFincaID),
     validarCampos
 ], httpFinca.putFincaActivas)
 router.put('/desactivar/:id', [
     validarJWT,
-    validarRol(["ADMIN","GESTOR"]),
+    validarRol(["ADMIN", "GESTOR"]),
     check('id', 'Se necesita un mongoID que sea valido').isMongoId(),
     check('id').custom(helperFinca.validarFincaID),
     validarCampos
