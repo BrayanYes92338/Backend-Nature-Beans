@@ -17,6 +17,7 @@ import preparacion from "./routes/preparacionSuelo.js"
 import sustrato from "./routes/elaboracionSustrato.js"
 import riego from "./routes/riego.js"
 import controlPlaga from "./routes/controlPlagas.js"
+import maquinariaHerramienta from "./routes/maquinariaHerramientas.js"
 
 
 const app = express()
@@ -38,6 +39,7 @@ app.use("/api/preparacion",preparacion)
 app.use("/api/sustrato",sustrato)
 app.use("/api/riego",riego)
 app.use("/api/controlPlaga",controlPlaga)
+app.use("/api/maquinariaHerramientas",maquinariaHerramienta)
 
 
 
