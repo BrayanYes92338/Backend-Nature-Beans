@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-const ControlPlagasSchema=new mongoose.Schema({
+const ControlPlagaSchema=new mongoose.Schema({
     idCultivo:{type:mongoose.Schema.Types.ObjectId,ref:'Cultivo',required:true},
     idEmpleado:{type:mongoose.Schema.Types.ObjectId,ref:'Empleado',required:true},
-    idOperario:{type:mongoose.Schema.Types.ObjectId,ref:'Operario',required:true},
+    idOperario:{type:mongoose.Schema.Types.ObjectId,ref:'Empleado',required:true},
     nombre:{type:String,required:true},
     tipo:{type:String,required:true},
     ingredienteActivo:{type:String,required:true},
@@ -12,4 +12,4 @@ const ControlPlagasSchema=new mongoose.Schema({
     createdAt:{type:Date,default:Date.now},
 })
 
-export default mongoose.model("ControlPlaga",ControlPlagasSchema)
+export default mongoose.model("ControlPlaga",ControlPlagaSchema)

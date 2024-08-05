@@ -8,7 +8,9 @@ const climaSchema=new mongoose.Schema({
     horaFinal:{type:String,required:true},
     tempMin:{type:String,required:true},
     tempMax:{type:String,required:true},
-    createAt: {type: Date, default: Date.now}
+    createAt: {type: Date, default: Date.now},
+    estado:{type:Number,default:1},
+    
 })
 
 export default mongoose.model("Clima",climaSchema)

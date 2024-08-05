@@ -4,7 +4,6 @@ const PreparacionSueloSchema = new mongoose.Schema({
     fecha:{type:Date, default:Date.now},
     idParcela:{type:mongoose.Schema.Types.ObjectId,ref:'Parcela',required:true},
     operario:{type:mongoose.Schema.Types.ObjectId,ref:'Empleado',required:true},
-    responsable:{type:mongoose.Schema.Types.ObjectId,ref:'Empleado',required:true},
     productos:[{  
         ingredienteActivo:{type:String,required:true},
         dosis:{type:String,required:true},
@@ -14,4 +13,4 @@ const PreparacionSueloSchema = new mongoose.Schema({
 })
 
 
-export default mongoose.model("PreparacionSuelo", PreparacionSueloSchema)
+export default mongoose.model("PreparacionSuelo", PreparacionSueloSchema)      
