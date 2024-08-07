@@ -21,6 +21,8 @@ import maquinariaHerramienta from "./routes/maquinariaHerramientas.js"
 import semilla from "./routes/semillas.js"
 import insumo from "./routes/insumos.js"
 import comprador from "./routes/comprador.js"
+import mantenimiento from "./routes/mantenimiento.js"
+
 
 
 
@@ -47,6 +49,9 @@ app.use("/api/maquinariaHerramientas",maquinariaHerramienta)
 app.use("/api/semilla",semilla)
 app.use("/api/comprador",comprador)
 app.use("/api/insumo",insumo)
+app.use("/api/mantenimiento",mantenimiento)
+
+
 
 
 

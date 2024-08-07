@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const mantenimientoSchema=new mongoose.Schema({
-    idGasto:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"Gasto"},
     idMaquinaria:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"Maquinaria"},
     responsable:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"Empleado"},
     observaciones:{type:String,required:true},
