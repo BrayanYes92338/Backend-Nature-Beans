@@ -1,6 +1,7 @@
 import Usuario from "../models/usuario.js"
 import { generarJWT } from "../middleware/validar-jwt.js";
 import bcryptjs from 'bcryptjs'
+import { sendEmail } from "../middleware/gmail.js";
 
 const httpUsuarios = {
     getUsuarios: async (req, res) => {
@@ -96,7 +97,47 @@ const httpUsuarios = {
                 msg: "Error al iniciar sesion, Hable con el Administrador"
               })
         }
+      },
+      enviarEmail: async (req, res) => {
+        try {
+            const { correo } = req.body;
+            await sendEmail(correo);
+            res.status(200).json({ success: true });
+        } catch (error) {
+            console.error("Error en el controlador enviarEmail:", error);
+            res.status(500).json({ success: false, error: "Error al enviar el correo" });
+        }
+    },
+    usuarioGetEmail: async(req,res)=>{
+      const {correo}=req.params
+      const usuario = await Usuario.findOne({correo})
+      if (!usuario) {
+          res.json({
+              "msg":"No ha encontrado el correo en la base de datos"
+          })
+      }else{
+          res.json({
+              usuario
+          })
       }
+    },
+    usuarioPutPassword: async(req,res)=>{
+      try {
+          const { correo, password } = req.body;
+          const salt = bcryptjs.genSaltSync(10);
+          const usuario = await Usuario.findOne({ correo: correo });
+    
+          if (!usuario) {
+              return res.status(404).json({ msg: 'Usuario no encontrado' });
+          }
+          usuario.password = bcryptjs.hashSync(password, salt);
+          await usuario.save();
+    
+          return res.status(200).json({ msg: 'Contraseña actualizada correctamente' });
+      } catch (error) {
+          return res.status(500).json({ msg: 'Error interno del servidor', error });
+      }
+    }
 
 }
 
