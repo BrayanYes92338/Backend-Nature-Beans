@@ -1,19 +1,22 @@
-import Parcela from '../models/parcelas.js'
+import Parcela from "../models/parcela.js";
 
-const helpersParcela = {
+const helperParcela ={
 
-    validarNumeroUnico: async (numero) => {
-        const existe = await Parcela.findOne({ numero });
-        if (existe) {
-          throw new Error("Este numero ya existe");
-        }
-      },
-      validarParcelaId: async (id) => {
+    validarExistaParcelaID: async (id) => {
         const existe = await Parcela.findById(id);
         if (existe == undefined) {
-          throw new Error("Id no existe");
+            throw new Error("Id de la Parcela no existe")
         }
-      },
+    },
+
+    validarNumeroParcela: async (numero)=>{
+        const existe = await Parcela.findOne({numero})
+        if (existe) {
+            throw new Error("Este Numero de Parcela ya existe")
+        }
+    }
+
+
 }
 
-export default helpersParcela;
+export default helperParcela

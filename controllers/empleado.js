@@ -25,10 +25,6 @@ const httpEmpleados = {
       res.status(500).json({ error: 'Error al obtener empleado inactivos' });
     }
   },
-  getEmpleados: async (req, res) => {
-    const empleado = await Empleado.find();
-    res.json({ empleado });
-  },
   getEmpleadosID: async (req, res) => {
     const { id } = req.params;
     const empleado = await Empleado.findById(id);
