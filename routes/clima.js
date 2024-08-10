@@ -13,8 +13,7 @@ router.get('/listar',[
     validarJWT,
     validarRol(["ADMIN", "GESTOR"]),
     validarCampos], httpClima.getClima)
-    validarJWT,
-    validarRol(["ADMIN", "GESTOR"]),
+    
 
     router.get('/listarid/:id', [
         validarJWT,
