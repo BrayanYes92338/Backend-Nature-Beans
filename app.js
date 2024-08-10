@@ -19,6 +19,7 @@ import riego from "./routes/riego.js"
 import controlPlaga from "./routes/controlPlagas.js"
 import maquinariaHerramienta from "./routes/maquinariaHerramientas.js"
 import semilla from "./routes/semillas.js"
+import inventario from "./routes/invertarios.js"
 
 
 const app = express()
@@ -42,6 +43,7 @@ app.use("/api/riego",riego)
 app.use("/api/controlPlaga",controlPlaga)
 app.use("/api/maquinariaHerramientas",maquinariaHerramienta)
 app.use("/api/semilla",semilla)
+app.use("/api/inventario",inventario)
 
 
 

@@ -4,13 +4,10 @@ const httpmaquinariaHerramientas = {
 
     getMaquinariaHerramientas: async(req, res)=>{
         const {buscar} = req.query;
-        const fincas = await MaquinariaHerramientas.find({
-            $or:[{nombre: new RegExp(buscar, "i")}]
+        const maquinas = await MaquinariaHerramientas.find({
+            $or:[{tipo: new RegExp(buscar, "i")}]
         })
-        .populate({
-            path:'idProveedor'
-        });
-        res.json({fincas})
+        res.json({maquinas})
     },
     getMaquinariaHerramientasID: async (req ,res)=>{
         const {id}= req.params;
@@ -23,9 +20,9 @@ const httpmaquinariaHerramientas = {
 
            const totl = cantidad * precio
 
-            const fincas = new MaquinariaHerramientas({idProveedor,nombre,tipo,observaciones,cantidad,precio,total: totl})
-            await fincas.save()
-            res.json({fincas})
+            const maquinas = new MaquinariaHerramientas({idProveedor,nombre,tipo,observaciones,cantidad,precio,total: totl})
+            await maquinas.save()
+            res.json({maquinas})
 
         }catch(error){
             console.log(error)
@@ -35,8 +32,8 @@ const httpmaquinariaHerramientas = {
     putMaquinariaHerramientas: async (req ,res)=>{
         const {id}=req.params;
         const {idProveedor,...resto} = req.body;
-        const fincas = await MaquinariaHerramientas.findByIdAndUpdate(id, {idProveedor, ...resto}, {new:true})
-        res.json({fincas})
+        const maquinas = await MaquinariaHerramientas.findByIdAndUpdate(id, {idProveedor, ...resto}, {new:true})
+        res.json({maquinas})
     },
 }
 
