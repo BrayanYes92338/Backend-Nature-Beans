@@ -22,6 +22,8 @@ import semilla from "./routes/semillas.js"
 import insumo from "./routes/insumos.js"
 import comprador from "./routes/comprador.js"
 import mantenimiento from "./routes/mantenimiento.js"
+import inventario from "./routes/invertarios.js"
+import factura from "./routes/factura.js"
 
 
 
@@ -50,7 +52,8 @@ app.use("/api/semilla",semilla)
 app.use("/api/comprador",comprador)
 app.use("/api/insumo",insumo)
 app.use("/api/mantenimiento",mantenimiento)
-
+app.use("/api/inventario",inventario)
+app.use('/api/factura',factura)
 
 
 
