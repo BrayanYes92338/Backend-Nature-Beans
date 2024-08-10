@@ -24,6 +24,7 @@ import comprador from "./routes/comprador.js"
 import mantenimiento from "./routes/mantenimiento.js"
 import inventario from "./routes/invertarios.js"
 import factura from "./routes/factura.js"
+import fertilizacion from "./routes/fertilizacion.js"
 
 
 
@@ -54,6 +55,9 @@ app.use("/api/insumo",insumo)
 app.use("/api/mantenimiento",mantenimiento)
 app.use("/api/inventario",inventario)
 app.use('/api/factura',factura)
+app.use('/api/fertilizacion',fertilizacion)
+
+
 
 
 
