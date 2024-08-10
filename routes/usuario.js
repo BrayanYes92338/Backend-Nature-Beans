@@ -83,4 +83,12 @@ router.post('/login', [
   validarCampos
 ], httpUsuarios.login)
 
+
+router.get('/correo/:correo', httpUsuarios.usuarioGetEmail)
+
+router.post('/recuperarContra', httpUsuarios.enviarEmail)
+
+router.put('/actualizarContra', httpUsuarios.usuarioPutPassword)
+
+
 export default router
