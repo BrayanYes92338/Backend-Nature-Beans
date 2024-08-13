@@ -25,6 +25,8 @@ import mantenimiento from "./routes/mantenimiento.js"
 import inventario from "./routes/invertarios.js"
 import factura from "./routes/factura.js"
 import fertilizacion from "./routes/fertilizacion.js"
+import siembra from "./routes/siembra.js"
+import gastos from "./routes/gastos.js"
 
 
 
@@ -56,6 +58,8 @@ app.use("/api/mantenimiento",mantenimiento)
 app.use("/api/inventario",inventario)
 app.use('/api/factura',factura)
 app.use('/api/fertilizacion',fertilizacion)
+app.use('/api/siembra',siembra)
+app.use('/api/gastos',gastos)
 
 
 
