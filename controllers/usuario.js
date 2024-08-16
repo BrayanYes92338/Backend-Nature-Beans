@@ -69,20 +69,20 @@ const httpUsuarios = {
 
             if(!user){
                 return res.status(401).json({
-                  msg: "Usuario/Contraseña no son  correctos/No esta agregado a la base de datos"
+                  msg: "Usuario/Contraseña no son  correctos"
                 })
               }
         
               if(user.estado === 0){
                 return res.status(401).json({
-                  msg: "Usuario/Contraseña no son  correctos/ No esta activo"
+                  msg: "Usuario/Contraseña no son  correctos"
                 })
               }
         
               const validPassword = bcryptjs.compareSync(password,user.password);
               if(!validPassword){
                 return res.status(401).json({
-                  msg: "Usuario/Contraseña no son  correctos/contra incorrecta"
+                  msg: "Usuario/Contraseña no son  correctos"
                 })
               }
         

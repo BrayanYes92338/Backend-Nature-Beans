@@ -12,6 +12,16 @@ router.get('/listar', [
     validarRol(["ADMIN", "GESTOR"]),
     validarCampos
 ], httpFinca.getFinca)
+router.get('/listarFincaActivas', [
+    validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    validarCampos
+], httpFinca.getFincaActiva)
+router.get('/listarFincaInactivas', [
+    validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    validarCampos
+], httpFinca.getFincaInactiva)
 router.post('/agregar', [
     validarJWT,
     validarRol(["ADMIN", "GESTOR"]),
