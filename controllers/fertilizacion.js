@@ -26,7 +26,7 @@ const httpFertilizacion ={
 
         }catch(error){
             console.log(error)
-            res.status(400).json({msg: 'Error no se pudo agregar fe'})
+            res.status(400).json({msg: 'Error no se pudo agregar fertilizacion'})
         }
     },
     putFertilizacion: async (req ,res)=>{
