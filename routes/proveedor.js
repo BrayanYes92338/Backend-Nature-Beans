@@ -52,6 +52,7 @@ router.put('/editar/:id',[
     validarCampos
 ], httpProveedor.putProveedor)
 
+
 router.put('/activar/:id', [
     validarJWT,
     validarRol(["ADMIN", "GESTOR"]),
