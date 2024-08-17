@@ -9,8 +9,7 @@ import helperEmpleado from "../helpers/empleado.js";
 const router = Router();
 
 router.get("/listar", [
-  validarJWT,
-  validarRol(["ADMIN", "GESTOR"]),
+
   validarCampos], httpEmpleados.getEmpleados);
 router.get("/activos", [
   validarJWT,
