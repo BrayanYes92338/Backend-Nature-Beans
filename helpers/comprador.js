@@ -34,5 +34,13 @@ validarCodigoUnicoEditar: async (nguiaTransporte, { req }) => {
   }
 },
 
+validarDocumento: async (documento) => {
+  const existe = await Comprador.findOne({ documento });
+  console.log(existe);
+  if (existe) {
+    throw new Error("el documento  ya existe");
+  }
+},
+
 }
 export default helpersComprador;

@@ -3,7 +3,6 @@ import { check } from "express-validator";
 import { validarCampos } from "../middleware/validar-campos.js";
 import httpProduccion from "../controllers/produccion.js";
 import helperProduccion from "../helpers/produccion.js";
-import httpCultivo from "../controllers/cultivo.js";
 
 const router = Router()
 
