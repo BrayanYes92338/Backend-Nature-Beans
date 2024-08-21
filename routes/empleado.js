@@ -14,7 +14,7 @@ router.get("/listar", [
 router.get("/activos", [
   validarJWT,
   validarRol(["ADMIN", "GESTOR"]),validarCampos], httpEmpleados.getEmpleadoActivo);
-router.get("inactivos", [
+router.get("/inactivos", [
   validarJWT,
   validarRol(["ADMIN", "GESTOR"]),
   validarCampos], httpEmpleados.getEmpleadoInactivo);

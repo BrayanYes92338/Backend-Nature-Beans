@@ -4,9 +4,9 @@ const httpEmpleados = {
   getEmpleados: async (req, res) => {
     const { buscar } = req.query;
     const empleado = await Empleado.find({
-      $or:[{nombre: new RegExp(buscar, "i")}]
+      $or: [{ nombre: new RegExp(buscar, "i") }]
     });
-    res.json({empleado});
+    res.json({ empleado });
   },
   getEmpleadoActivo: async (req, res) => {
     try {
@@ -32,8 +32,8 @@ const httpEmpleados = {
   },
   postEmpleado: async (req, res) => {
     try {
-      const {nombre,documento,correo,direccion,telefono,estudios,descripcion } = req.body;
-      const empleado = new Empleado({nombre,documento,correo,direccion,telefono,estudios,descripcion });
+      const { nombre, documento, correo, direccion, telefono, estudios, descripcion } = req.body;
+      const empleado = new Empleado({ nombre, documento, correo, direccion, telefono, estudios, descripcion });
       await empleado.save();
       res.json({ empleado });
     } catch (error) {
@@ -45,7 +45,7 @@ const httpEmpleados = {
     const { id } = req.params;
     const { nombre, ...resto } = req.body;
     const empleado = await Empleado.findByIdAndUpdate(
-      id, { nombre, ...resto },{ new: true } );
+      id, { nombre, ...resto }, { new: true });
     res.json({ empleado });
   },
   putEmpleadoActivar: async (req, res) => {
@@ -63,7 +63,7 @@ const httpEmpleados = {
     res.json({ empleado });
   },
 
-  
+
 };
 
 export default httpEmpleados;
