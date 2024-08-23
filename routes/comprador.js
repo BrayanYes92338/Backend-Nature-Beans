@@ -23,9 +23,14 @@ comprador.get('/listar',[
     comprador.post('/agregar', [
         check('idProduccion', 'el ID de Comprador no puede estar vacio').notEmpty(),
         check('nombre', 'el nombre no puede estar vacio').notEmpty(),
+        check('especie', 'la especie no puede estar vacia').notEmpty(),
+        check('documento', 'El documento no puede estar vacio').notEmpty(),
         check('telefono', 'El telefono no puede estar vacio').notEmpty(),
+        check('cantidad', 'La cantidad no puede estar vacia').notEmpty(),
         check('nguiaTransporte','El  nguiaTransporte no puede estar vacio').notEmpty(),
+        check('valor', 'El valor no puede estar vacio').notEmpty(),
         check('idProduccion').custom(helpersComprador.validarProduccionId),
+        check('documento').custom(helpersComprador.validarDocumento),
         check('nguiaTransporte').custom(helpersComprador.validarCodigoUnico),
 
         validarCampos
@@ -34,10 +39,15 @@ comprador.get('/listar',[
 
     comprador.put('/editar/:id',[
         check('idProduccion', 'el ID de Comprador no puede estar vacio').notEmpty(),
-        check('nombre', 'el nombre no puede estar vacio').notEmpty(),
+        check('nombre', 'El nombre no puede estar vacio').notEmpty(),
+        check('especie', 'La especie no puede estar vacia').notEmpty(),
+        check('documento', 'El documento no puede estar vacio').notEmpty(),
         check('telefono', 'El telefono no puede estar vacio').notEmpty(),
+        check('cantidad', 'La cantidad no puede estar vacia').notEmpty(),
         check('nguiaTransporte','El  nguiaTransporte no puede estar vacio').notEmpty(),
+        check('valor', 'El valor no puede estar vacio').notEmpty(),
         check('idProduccion').custom(helpersComprador.validarProduccionId),
+        check('documento').custom(helpersComprador.validarDocumento),
         check("nguiaTransporte").custom((nguiaTransporte, { req }) => helpersComprador.validarCodigoUnicoEditar(nguiaTransporte, { req })),
         validarCampos
     ], httpComprador.putcomprador)
