@@ -14,6 +14,25 @@ const httpInsumos = {
       path: 'idReponsable'
   });
     res.json ({insumo})
+  },
+  
+  postInsumos: async (req, res) =>{
+    try{
+      const {IdProveedor,idReponsable, nombre,relacionNPK,cantidad,unidad,observaciones,total}  = req.body;
+      const insumos = new Insumo ({IdProveedor,idReponsable, nombre,relacionNPK,cantidad,unidad,observaciones,total})
+      await insumos.save()
+      res.json({insumos})
+    }catch(error){
+      console.log(error)
+      res.status(400).json({ msg: "Error no se pudo crear el registro de Insumos" })
+    }
+  },
+
+  putInsumos: async (req, res)=>{
+    const { id } = req.params;
+    const {IdProveedor,...resto} = req.body;
+    const insumos = await Insumo.findByIdAndUpdate(id, {IdProveedor,...resto}, {new: true} )
+    res.json({insumos})
   }
 
 }
