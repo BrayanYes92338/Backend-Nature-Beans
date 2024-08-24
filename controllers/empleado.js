@@ -9,21 +9,12 @@ const httpEmpleados = {
     res.json({ empleado });
   },
   getEmpleadoActivo: async (req, res) => {
-    try {
-      const empleadoActivos = await Empleado.find({ estado: 1 });
-      res.json({ empleado: empleadoActivos });
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener empleado activos' });
-    }
+    const empleadoActivo = await Empleado.find({ estado: 1 })
+        res.json({ empleadoActivo });
   },
   getEmpleadoInactivo: async (req, res) => {
-    try {
-      const empleadoInactivos = await Empleado.find({ estado: 0 });
-      res.json({ empleado: empleadoInactivos });
-
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener empleado inactivos' });
-    }
+    const empleadoInactivo = await Empleado.find({ estado: 0 })
+    res.json({ empleadoInactivo });
   },
   getEmpleadosID: async (req, res) => {
     const { id } = req.params;
@@ -38,7 +29,7 @@ const httpEmpleados = {
       res.json({ empleado });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ msg: "Error no se pudo crear el Usuario" });
+      res.status(400).json({ msg: "Error no se pudo crear el Empleado" });
     }
   },
   putEmpleado: async (req, res) => {

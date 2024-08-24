@@ -2,54 +2,41 @@ import { Router } from 'express'
 import { check } from 'express-validator'
 import { validarCampos } from '../middleware/validar-campos.js'
 import { validarJWT } from '../middleware/validar-jwt.js'
-import httpInsumo from '../controllers/insumos.js'
-import helpersInsumo from '../helpers/insumos.js'
+import { validarRol } from "../middleware/validar-rol.js";
+import httpInsumos from "../controllers/insumos.js"
+import helperInsumo from "../helpers/insumos.js"
 
-// import helperNomina from '../helpers/nomina.js'
+const router = Router()
 
-const insumo = Router()
+router.get('/listar', [
+    validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    validarCampos
+  ], httpInsumos.getInsumos)
 
-insumo.get('/listar',[
-    validarCampos], httpInsumo.getInsumo)
+router.post('/agregar',[
+  validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    check('IdProveedor', 'El id del Proveedor no puede estar vacio').notEmpty(),
+    check('IdProveedor', 'Se debe agregar un id de Proveedor que sea valido').isMongoId(),
+    check('idReponsable', 'El id del Trabajador no puede estar vacio').notEmpty(),
+    check('idReponsable', 'Se debe agregar un id del empleado que sea valido').isMongoId(),
+    check('nombre', 'Se debe agregar un nombre').notEmpty(),
+    check('relacionNPK', 'Se debe agregar la cantidad NPK').notEmpty(),
+    check('cantidad', 'Se debe agregar la cantidad de Insumos').notEmpty(),
+    check('unidad', 'Se debe agregar unidad').notEmpty(),
+    check('observaciones', 'Se debe agregar las observaciones').notEmpty(),
+    check('total', 'Se debe agregar el total').notEmpty(),
+    validarCampos
+], httpInsumos.postInsumos)
 
-    insumo.get('/listarid/:id', [
-        validarCampos
-    ], httpInsumo.getInsumoID);
-    
-    insumo.post('/agregar', [
-        check('idReponsable', 'se necesita un mongoID que sea valido para id Reponsable').isMongoId(),
-        check('IdProveedor', 'se necesita un mongoID que sea valido para Id Proveedor').isMongoId(),
-        check('idReponsable').custom(helpersInsumo.validarEmpleadoId),
-        check('IdProveedor').custom(helpersInsumo.validarProveedorId),
-        check('idReponsable', 'el id Reponsable no puede estar vacio').notEmpty(),
-        check('IdProveedor', 'la Id Proveedor no puede estar vacio').notEmpty(),
-        check('nombre', 'el nombre no puede estar vacio').notEmpty(),
-        check('fecha', 'la fecha no puede estar vacio').notEmpty(),
-        check('relacionNPK','la relacionNPK  no puede estar vacio').notEmpty(),
-        check('cantidad', 'La cantidad  no puede estar vacia').notEmpty(),
-        check('unidad', 'La unidad no puede estar vacia').notEmpty(),
-        check('observaciones', 'La observaciones no puede estar vacia').notEmpty(),
-        check('total', 'el total no puede estar vacia').notEmpty(),
-        validarCampos
-    ], httpInsumo.postInsumo) 
+router.put('/editar/:id', [
+  validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    check('id', 'Se necesita un mongoID que sea valido').isMongoId(),
+    check('id').custom(helperInsumo.validarInsumoID),
+    validarCampos
+], httpInsumos.putInsumos)
 
-    insumo.put('/editar/:id',[
-        check('idReponsable', 'se necesita un mongoID que sea valido para id Reponsable').isMongoId(),
-        check('IdProveedor', 'se necesita un mongoID que sea valido para Id Proveedor').isMongoId(),
-        check('idReponsable').custom(helpersInsumo.validarEmpleadoId),
-        check('IdProveedor').custom(helpersInsumo.validarProveedorId),
-        check('idReponsable', 'el id Reponsable no puede estar vacio').notEmpty(),
-        check('IdProveedor', 'la Id Proveedor no puede estar vacio').notEmpty(),
-        check('nombre', 'el nombre no puede estar vacio').notEmpty(),
-        check('fecha', 'la fecha no puede estar vacio').notEmpty(),
-        check('relacionNPK','la relacionNPK  no puede estar vacio').notEmpty(),
-        check('cantidad', 'La cantidad  no puede estar vacia').notEmpty(),
-        check('unidad', 'La unidad no puede estar vacia').notEmpty(),
-        check('observaciones', 'La observaciones no puede estar vacia').notEmpty(),
-        check('total', 'el total no puede estar vacia').notEmpty(),
-        validarCampos
-    ], httpInsumo.putInsumo)
-    
 
-    
-    export default insumo
+  export default router
