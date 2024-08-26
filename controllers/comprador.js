@@ -1,7 +1,5 @@
 import Comprador from "../models/comprador.js";
 
-
-
 const httpComprador = {
   getComprador: async (req, res) => {
     const { buscar } = req.query;
@@ -10,6 +8,23 @@ const httpComprador = {
       path: 'idProduccion'
   })
     res.json({ comprador });
+  },
+
+
+  getCompradorActivo: async (req, res)=>{
+    const compradores = await Comprador.find({estado: 1})
+    .populate({
+      path: 'idProduccion'
+  })
+    res.json({ compradores })
+  },
+
+  getCompradorInactivo: async (req, res)=>{
+    const compradores = await Comprador.find({estado: 0})
+    .populate({
+      path: 'idProduccion'
+  })
+    res.json({ compradores })
   },
 
 
