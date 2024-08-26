@@ -8,6 +8,7 @@ const UsuarioSchema=new mongoose.Schema({
     password:{type:String,required:true},
     telefono:{type:String,required:true},
     rol:{type:String, required:true},
+    departamento:{type:String,required:true},
     municipio:{type:String,required:true},
     estado:{type:Number,default:1}
 })
