@@ -50,6 +50,7 @@ router.post('/agregar', [
   check('telefono', 'El telefono no puede estar vacio').notEmpty(),
   check('telefono', "El telefono solo debe llevar números").isNumeric(),
   check('rol', 'El Rol no puede estar vacio').notEmpty(),
+  check('departamento', 'El Departamento no puede estar vacio').notEmpty(),
   check('municipio', 'El Municipio no puede estar vacio').notEmpty(),
   validarCampos
 ], httpUsuarios.postUsuarios)

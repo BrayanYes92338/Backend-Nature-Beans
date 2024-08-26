@@ -21,7 +21,10 @@ const httpCultivo = {
   },
   getCultivoActivo: async (req, res) => {
     try {
-      const cultivoActivos = await Cultivo.find({ estado: 1 });
+      const cultivoActivos = await Cultivo.find({ estado: 1 })
+      .populate({
+        path:'idParcela'
+       }) ;
       res.json({ cultivo: cultivoActivos });
     } catch (error) {
       res.status(500).json({ error: 'Error al obtener cultivos activos' });
@@ -29,7 +32,10 @@ const httpCultivo = {
   },
   getCultivoInactivo: async (req, res) => {
     try {
-      const cultivoInactivos = await Cultivo.find({ estado: 0 });
+      const cultivoInactivos = await Cultivo.find({ estado: 0 })
+      .populate({
+        path:'idParcela'
+       }) ;
       res.json({ cultivo: cultivoInactivos });
 
     } catch (error) {

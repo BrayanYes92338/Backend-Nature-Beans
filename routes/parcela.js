@@ -14,6 +14,18 @@ router.get('/listar', [
     validarCampos
 ], httpParcela.getParcela)
 
+router.get('/listarParcelaActiva', [
+    validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    validarCampos
+], httpParcela.getParcelaActivas)
+
+router.get('/listarParcelaInactiva', [
+    validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    validarCampos
+], httpParcela.getParcelaInactiva)
+
 router.post('/agregar', [
     validarJWT,
     validarRol(["ADMIN", "GESTOR"]),

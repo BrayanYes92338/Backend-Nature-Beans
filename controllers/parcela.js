@@ -10,6 +10,19 @@ const httpParcelas = {
     .populate({path:'asistenteTecnico'})
     res.json({ parcela })
   },
+  getParcelaActivas: async (req, res)=>{
+     const parcelas = await Parcela.find({estado:1})
+     .populate({path:'idFinca'})
+     .populate({path:'asistenteTecnico'})
+     res.json({parcelas})
+    },
+  getParcelaInactiva: async (req, res)=>{
+    const parcelas = await Parcela.find({estado:0})
+     .populate({path:'idFinca'})
+    .populate({path:'asistenteTecnico'})
+    res.json({parcelas})
+  },
+
   postParcela: async (req, res) => {
     try {
       const { idFinca, asistenteTecnico, ubicacion, numero, cultivoAnterior, cultivoActual, detalle, area } = req.body;

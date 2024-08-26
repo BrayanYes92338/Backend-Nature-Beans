@@ -4,26 +4,17 @@ const httpEmpleados = {
   getEmpleados: async (req, res) => {
     const { buscar } = req.query;
     const empleado = await Empleado.find({
-      $or:[{nombre: new RegExp(buscar, "i")}]
+      $or: [{ nombre: new RegExp(buscar, "i") }]
     });
-    res.json({empleado});
+    res.json({ empleado });
   },
   getEmpleadoActivo: async (req, res) => {
-    try {
-      const empleadoActivos = await Empleado.find({ estado: 1 });
-      res.json({ empleado: empleadoActivos });
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener empleado activos' });
-    }
+    const empleadoActivo = await Empleado.find({ estado: 1 })
+        res.json({ empleadoActivo });
   },
   getEmpleadoInactivo: async (req, res) => {
-    try {
-      const empleadoInactivos = await Empleado.find({ estado: 0 });
-      res.json({ empleado: empleadoInactivos });
-
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener empleado inactivos' });
-    }
+    const empleadoInactivo = await Empleado.find({ estado: 0 })
+    res.json({ empleadoInactivo });
   },
   getEmpleadosID: async (req, res) => {
     const { id } = req.params;
@@ -32,20 +23,20 @@ const httpEmpleados = {
   },
   postEmpleado: async (req, res) => {
     try {
-      const {nombre,documento,correo,direccion,telefono,estudios,descripcion } = req.body;
-      const empleado = new Empleado({nombre,documento,correo,direccion,telefono,estudios,descripcion });
+      const { nombre, documento, correo, direccion, telefono, estudios, descripcion } = req.body;
+      const empleado = new Empleado({ nombre, documento, correo, direccion, telefono, estudios, descripcion });
       await empleado.save();
       res.json({ empleado });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ msg: "Error no se pudo crear el Usuario" });
+      res.status(400).json({ msg: "Error no se pudo crear el Empleado" });
     }
   },
   putEmpleado: async (req, res) => {
     const { id } = req.params;
     const { nombre, ...resto } = req.body;
     const empleado = await Empleado.findByIdAndUpdate(
-      id, { nombre, ...resto },{ new: true } );
+      id, { nombre, ...resto }, { new: true });
     res.json({ empleado });
   },
   putEmpleadoActivar: async (req, res) => {
@@ -63,7 +54,7 @@ const httpEmpleados = {
     res.json({ empleado });
   },
 
-  
+
 };
 
 export default httpEmpleados;
