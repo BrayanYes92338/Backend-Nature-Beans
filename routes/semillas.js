@@ -18,13 +18,12 @@ semilla.get("/listarProveedores/:id",[
   validarCampos
 ],httpSemillas.getProveedores);
 
-semilla.get("/activos", [validarCampos], httpSemillas.getSemillaActivo);
-semilla.get("/inactivos", [validarCampos], httpSemillas.getSemillaInactivo);
+semilla.get("/activos", [validarCampos], httpSemillas. getSemillaActiva);
+semilla.get("/inactivos", [validarCampos], httpSemillas.geSemillaInactiva);
 
 semilla.post("/agregar",[
   check('idProveedor', 'Se id Proveedor no puede estar vacio').notEmpty(),
   check('numFactura', 'numFactura no puede estar vacio').notEmpty(),
-  check('fechaCompra', 'fechaCompra no puede estar vacio').notEmpty(),
   check('fechaVencimiento', 'fechaVencimiento no puede estar vacio').notEmpty(),
   check('especie', 'especie no puede etar vacio').notEmpty(),
   check('variedad', 'variedad no puede estar vacio').notEmpty(),

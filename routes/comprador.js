@@ -46,9 +46,9 @@ comprador.get('/listar',[
         check('cantidad', 'La cantidad no puede estar vacia').notEmpty(),
         check('nguiaTransporte','El  nguiaTransporte no puede estar vacio').notEmpty(),
         check('valor', 'El valor no puede estar vacio').notEmpty(),
-        check('idProduccion').custom(helpersComprador.validarProduccionId),
-        check('documento').custom(helpersComprador.validarDocumento),
-        check("nguiaTransporte").custom((nguiaTransporte, { req }) => helpersComprador.validarCodigoUnicoEditar(nguiaTransporte, { req })),
+        // check('idProduccion').custom(helpersComprador.validarProduccionId),
+        // check('documento').custom(helpersComprador.validarDocumento),
+        // check("nguiaTransporte").custom((nguiaTransporte, { req }) => helpersComprador.validarCodigoUnicoEditar(nguiaTransporte, { req })),
         validarCampos
     ], httpComprador.putcomprador)
     

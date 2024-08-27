@@ -2,8 +2,29 @@ import Semilla from "../models/semillas.js";
 
 const httpSemillas = {
   getSemillas: async (req, res) => {
-    const semilla = await Semilla.find();
+    const semilla = await Semilla.find()
+    .populate({
+      path: 'idProveedor'
+  });
     res.json({ semilla });
+  },
+  
+  getSemillaActiva: async (req, res) => {
+    try {
+      const semillaActiva = await Semilla.find({ estado: 1 });
+      res.json({ semilla: semillaActiva });
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener semilla activa' });
+    }
+  },
+  geSemillaInactiva: async (req, res) => {
+    try {
+      const semillaInactiva = await Semilla.find({ estado: 0 });
+      res.json({ semilla: semillaInactiva });
+
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener semilla inactiva' });
+    }
   },
 
   getSemillaID: async (req, res) => {
@@ -16,7 +37,7 @@ const httpSemillas = {
     try {
       const semillas = await Semilla.find(idProveedores).populate("idProveedor")
 
-      res.json({semillas});
+      res.json({semilla});
     } catch (error) {
       console.error("Error al obtener las semillas por responsable:", error);
       res
@@ -29,7 +50,6 @@ const httpSemillas = {
       const {
         idProveedor,
         numFactura,
-        fechaCompra,
         fechaVencimiento,
         especie,
         variedad,
@@ -40,7 +60,6 @@ const httpSemillas = {
       const semilla = new Semilla({
         idProveedor,
         numFactura,
-        fechaCompra,
         fechaVencimiento,
         especie,
         variedad,
