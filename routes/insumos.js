@@ -27,9 +27,8 @@ insumo.get('/listar',[
         check('fecha', 'la fecha no puede estar vacio').notEmpty(),
         check('relacionNPK','la relacionNPK  no puede estar vacio').notEmpty(),
         check('cantidad', 'La cantidad  no puede estar vacia').notEmpty(),
-        check('unidad', 'La unidad no puede estar vacia').notEmpty(),
+        check('precio', 'La precio no puede estar vacia').notEmpty(),
         check('observaciones', 'La observaciones no puede estar vacia').notEmpty(),
-        check('total', 'el total no puede estar vacia').notEmpty(),
         validarCampos
     ], httpInsumo.postInsumo) 
 

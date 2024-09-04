@@ -10,6 +10,11 @@ router.get('/listar',[validarCampos],httpProduccion.getProduccion)
 
 router.get('/listarid/:id',[validarCampos],httpProduccion.getProduccionID)
 
+router.get('/listar/fechas',[validarCampos],httpProduccion.getProduccionEntreFechas)
+
+router.get('/listar/total',[validarCampos],httpProduccion.getProduccionTotal)
+
+
 router.post('/agregar',[
     check('idCultivo', 'El idCultivo no puede estar vacio').notEmpty(),
     check('numLote', 'El numLote no puede estar vacio').notEmpty(),

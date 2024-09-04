@@ -4,8 +4,10 @@ import Comprador from "../models/comprador.js";
 
 const httpComprador = {
   getComprador: async (req, res) => {
-    const { buscar } = req.query;
     const comprador = await Comprador.find()
+     .populate({
+      path:'idProduccion'
+     }) 
     
     res.json({ comprador });
   },
@@ -17,6 +19,36 @@ const httpComprador = {
     console.log(comprador);
     res.json({ comprador });
   },
+
+  getCompradorFechas: async (req,res) => {
+
+    const { fechaInicio, fechaFin } = req.body;
+   
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ mensaje: 'Por favor proporciona las fechas de inicio y fin' });
+    }
+   
+    try {
+        const documentos = await Comprador.find({
+            fecha: {
+                $gte: new Date(fechaInicio),
+                $lte: new Date(fechaFin)
+            }
+        })
+        
+   
+        if(documentos.length === 0) {
+            res.json({ message: "No se encontro ningun Comprador entre esas fechas"})
+        }else{
+   
+        res.json({msg:`Se encontro entre las fechas ${fechaInicio} y ${fechaFin} los siguientes Compradores`, data: documentos});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+    }
+   
+    },
 
   postComprador: async (req, res) => {
     try {
@@ -44,16 +76,6 @@ const httpComprador = {
     res.json({ comprador })
   },
 
-  putCompradorActiva: async (req, res) => {
-    const { id } = req.params;
-    const comprador = await Comprador.findByIdAndUpdate(id, { estado: 1 }, { new: true })
-    res.json({ comprador })
-  },
-  putCompradorInactiva: async (req, res) => {
-    const { id } = req.params;
-    const comprador = await Comprador.findByIdAndUpdate(id, { estado: 0 }, { new: true })
-    res.json({ comprador })
-  },
 
 }
 

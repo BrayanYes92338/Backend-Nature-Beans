@@ -14,6 +14,17 @@ router.get('/listar',[
         validarCampos
     ], httpProceso.getProcesoID);
     
+    router.get('/listar/empleado/:id', [
+        validarCampos
+    ], httpProceso.getProcesoEmpleado);
+
+    router.get('/listar/fechas', [
+        validarCampos
+    ], httpProceso.getProcesosFechas);
+
+    router.get('/listar/tipo/:tipo', [
+        validarCampos
+    ], httpProceso.getProcesoTipo);
 
 router.post('/agregar', [
     check('idCultivo', 'el ID de la cultivo no puede estar vacio').notEmpty(),

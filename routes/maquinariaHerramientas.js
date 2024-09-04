@@ -16,6 +16,12 @@ router.get('/listarID/:id',[
     validarCampos
 ],httpmaquinariaHerramientas.getMaquinariaHerramientasID)
 
+router.get('/listar/fecha',[],httpmaquinariaHerramientas.getMaquinariaHerramientasFechas)
+
+router.get('/listar/cantidad',[],httpmaquinariaHerramientas.getMaquinariaHerramientasCantidad)
+
+
+
 router.post('/agregar',[
     check('idProveedor', 'El id del Proveedor no puede estar vacio').notEmpty(),
     check('nombre', 'El nombre no puede estar vacio').notEmpty(),

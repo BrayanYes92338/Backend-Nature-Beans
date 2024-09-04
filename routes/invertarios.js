@@ -10,10 +10,7 @@ router.get('/listar',[],httpinventario.getInventario)
 
 router.get('/listarID/:id',[],httpinventario.getInventarioID)
 
-router.get('/listarCant',[
-    check('id', 'Se necesita un mongoID que sea valido').isMongoId(),
-    check('id').custom(helperInventario.validarInventarioID),
-    validarCampos
+router.get('/listarCant/:cantidad',[
 ],httpinventario.getInventarioCant)
 
 router.post('/agregar',[

@@ -26,35 +26,13 @@ const httpSemillas = {
   },
   postSemilla: async (req, res) => {
     try {
-      const {
-        idProveedor,
-        numFactura,
-        fechaCompra,
-        fechaVencimiento,
-        especie,
-        variedad,
-        NumLote,
-        origen,
-        poderGerminativo,
-      } = req.body;
-      const semilla = new Semilla({
-        idProveedor,
-        numFactura,
-        fechaCompra,
-        fechaVencimiento,
-        especie,
-        variedad,
-        NumLote,
-        origen,
-        poderGerminativo,
-      });
+      const {idProveedor,numFactura,fechaCompra,fechaVencimiento,especie,variedad,NumLote,origen,poderGerminativo,total} = req.body;
+      const semilla = new Semilla({idProveedor,numFactura,fechaCompra,fechaVencimiento,especie,variedad,NumLote,origen,poderGerminativo,total});
       await semilla.save();
       res.json({ semilla });
     } catch (error) {
       console.log(error);
-      res
-        .status(400)
-        .json({ msg: "Error no se pudo crear el registro de Semillas" });
+      res.status(400).json({ msg: "Error no se pudo crear el registro de Semillas" });
     }
   },
   putSemilla: async (req, res) => {

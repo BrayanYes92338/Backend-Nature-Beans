@@ -9,34 +9,31 @@ import helperClima from '../helpers/clima.js'
 
 const router = Router()
 
-router.get('/listar',[
-    validarJWT,
-    validarRol(["ADMIN", "GESTOR"]),
-    validarCampos], httpClima.getClima)
-    validarJWT,
-    validarRol(["ADMIN", "GESTOR"]),
+router.get('/listar',[ validarCampos], httpClima.getClima)
+
 
     router.get('/listarid/:id', [
-        validarJWT,
-        validarRol(["ADMIN", "GESTOR"]),
         validarCampos
     ], httpClima.getClimaID);
     
     router.get('/activar', [
-        validarJWT,
-        validarRol(["ADMIN", "GESTOR"]),
         validarCampos
     ], httpClima.getClimaActivo)
     
     router.get('/desactivar', [
-        validarJWT,
-        validarRol(["ADMIN", "GESTOR"]),
         validarCampos
     ], httpClima.getClimaInactivo)
 
+    router.get('/tipo/:tipoClima', [
+        validarCampos
+    ], httpClima.getClimaTipo)
+
+    router.get('/listar/fechas', [
+        validarCampos
+    ], httpClima.getClimaFechas)
+    
 router.post('/agregar', [
-    validarJWT,
-    validarRol(["ADMIN", "GESTOR"]),
+
     check('idFinca', 'el ID de la finca no puede estar vacio').notEmpty(),
     check('idEmpleado', 'El ID del empleado no puede estar vacio').notEmpty(),
     check('tipoClima','El tipo de clima  no puede estar vacio').notEmpty(),
@@ -49,8 +46,7 @@ router.post('/agregar', [
 ], httpClima.postClima)    
 
 router.put('/editar/:id',[
-    validarJWT,
-    validarRol(["ADMIN", "GESTOR"]),
+
     check('id', 'se necesita un mongoID que sea valido').isMongoId(),
     check('id').custom(helperClima.validarClimaID),
     validarCampos
@@ -63,8 +59,7 @@ router.put('/activar/:id', [
 ], httpClima.putClimaActivos)
 
 router.put('/desactivar/:id', [
-    validarJWT,
-    validarRol(["ADMIN", "GESTOR"]),
+
     check('id', 'Se necesita un mongoID que sea valido' ).isMongoId(),
     check('id').custom(helperClima.validarClimaID),
     validarCampos

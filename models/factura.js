@@ -8,9 +8,9 @@ const facturaSchema = new mongoose.Schema({
     precio:{type:Number, default:0, required:true},
     cantidad:{type:Number,required:true},
     iva:{type:Number,default:0, required:true},
-    subtotal:{type:Number,required:true},
+    subtotal:{type:Number,default:0},
     total:{type:Number, default:0},
-    createdAt:{type:Date,default:Date.now}
+    fecha:{type:Date,default:Date.now}
 })
 
 

@@ -17,25 +17,11 @@ const httpInsumo = {
 
   postInsumo: async (req, res) => {
     try {
-      const  {
-        IdProveedor,
-        idReponsable,
-        nombre,
-        fecha,
-        relacionNPK,
-        cantidad,
-        unidad,
-        observaciones,
-        total} = req.body;
-      const insumo = new Insumo({    IdProveedor,
-        idReponsable,
-        nombre,
-        fecha,
-        relacionNPK,
-        cantidad,
-        unidad,
-        observaciones,
-        total})
+      const  {IdProveedor,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones} = req.body;
+
+      const totl = cantidad*precio
+
+      const insumo = new Insumo({IdProveedor,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones,total:totl})
       await insumo.save()
       res.json({ insumo })
 

@@ -15,6 +15,18 @@ mantenimiento.get('/listarid/:id', [
     validarCampos
 ], httpMantenimiento.getMantenimientoID);
 
+mantenimiento.get('/listar/fechas', [
+    validarCampos
+], httpMantenimiento.getmantenimientoFechas);
+
+mantenimiento.get('/listar/responsable/:id', [
+    validarCampos
+], httpMantenimiento.getMantenimientoResponsable);
+
+mantenimiento.get('/listar/maquina/:id', [
+    validarCampos
+], httpMantenimiento.getMantenimientoMaquina);
+
 mantenimiento.post('/agregar', [
     check('idMaquinaria', 'El ID de Maquinaria es obligatorio y debe ser un MongoID válido').isMongoId(),
     check('responsable', 'El ID del responsable es obligatorio y debe ser un MongoID válido').isMongoId(),

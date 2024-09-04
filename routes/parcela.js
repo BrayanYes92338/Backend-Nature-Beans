@@ -14,6 +14,8 @@ router.get('/listar', [
     validarCampos
 ], httpParcela.getParcela)
 
+router.get("/listar/asistente/:id",[],httpParcela.getParcelaAsistente)
+
 router.post('/agregar', [
     validarJWT,
     validarRol(["ADMIN", "GESTOR"]),

@@ -18,7 +18,8 @@ comprador.get('/listar',[
         validarCampos
     ], httpComprador.getCompradorID);
     
-
+    comprador.get('/listar/fechas',[
+        validarCampos], httpComprador.getCompradorFechas)
 
     comprador.post('/agregar', [
         check('idProduccion', 'el ID de Comprador no puede estar vacio').notEmpty(),
@@ -42,15 +43,6 @@ comprador.get('/listar',[
         validarCampos
     ], httpComprador.putcomprador)
     
-    comprador.put('/activar/:id', [
-        check('id', 'Se necesita un mongoID que sea valido' ).isMongoId(),
-        validarCampos
-    ], httpComprador.putCompradorActiva)
-    
-    comprador.put('/desactivar/:id', [
-        check('id', 'Se necesita un mongoID que sea valido' ).isMongoId(),
-        // check('id').custom(helperNomina.validarNominaID),
-        validarCampos
-    ], httpComprador.putCompradorInactiva)
+
     
     export default comprador

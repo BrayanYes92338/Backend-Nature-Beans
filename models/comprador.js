@@ -5,7 +5,7 @@ const compradorSchema=new mongoose.Schema({
     nombre:{type:String,required:true},
     telefono:{type:String,required:true},
     nguiaTransporte:{type:String,required:true, unique:true},
-    createdAt:{type:Date,default:Date.now},
+    fecha:{type:Date,default:Date.now},
 })
 
 export default mongoose.model("Comprador",compradorSchema)

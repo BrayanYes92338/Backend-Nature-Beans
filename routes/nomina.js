@@ -22,6 +22,18 @@ router.get('/listar',[
         validarCampos
     ], httpNomina.getNominaInactiva)
 
+    router.get('/valorTotal', [
+        validarCampos
+    ], httpNomina.getNominaValor)
+
+    router.get('/listar/empleado/:id', [
+        validarCampos
+    ], httpNomina.getNominaEmpleado)
+
+    router.get('/listar/fechas', [
+        validarCampos
+    ], httpNomina.getNominaFechas)
+
     router.post('/agregar', [
         check('idEmpleado', 'el ID del empleado no puede estar vacio').notEmpty(),
         check('tipo','El tipo   no puede estar vacio').notEmpty(),

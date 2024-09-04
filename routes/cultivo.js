@@ -9,8 +9,14 @@ import helperCultivo from "../helpers/cultivo.js";
 const router = Router();
 
 router.get("/listar", [validarCampos], httpCultivo.getCultivo);
+
 router.get("/activos", [validarCampos], httpCultivo.getCultivoActivo);
+
 router.get("/inactivos", [validarCampos], httpCultivo.getCultivoActivo);
+
+router.get("/tipo/:tipo", [validarCampos], httpCultivo.getCultivoTipo);
+
+
 router.post("/agregar", [
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("tipo", "El tipo no puede estar vacio").notEmpty(),

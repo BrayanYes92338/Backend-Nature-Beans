@@ -6,54 +6,34 @@ import httpSustrato from "../controllers/elaboracionSustrato.js";
 import helperSustrato from "../helpers/elaboracionSustrato.js";
 
 const router = Router();
-
+ 
 router.get("/listar", [validarCampos], httpSustrato.getSustrato);
 
-router.get("/listar/:id", [validarCampos], httpSustrato.getSustratoID);
+router.get("/listarID/:id", [validarCampos], httpSustrato.getSustratoID);
 
-router.post(
-  "/agregar",
-  [
+router.get("/listar/operario/:id", [validarCampos], httpSustrato.getSustratoOperario);
+
+router.get("/listar/responsable/:id", [validarCampos], httpSustrato.getSustratoResponsable);
+
+router.get("/listar/fechas", [validarCampos], httpSustrato.getSustratoFechas);
+
+
+router.post( 
+  "/agregar",[
     check("idProceso", "el ID del proceso no puede estar vacio").notEmpty(),
-    check(
-      "idEmpleadooperario",
-      "El ID del operario no puede estar vacio"
-    ).notEmpty(),
-    check(
-      "idEmpleadoresponsable",
-      "El ID del responsable no puede estar vacio"
-    ).notEmpty(),
-    check(
-      "productocomercial",
-      "el producto comercial no puede estar vacio"
-    ).notEmpty(),
-    check(
-      "ingredienteActivo",
-      "el ingrediente activo no puede estar vacio"
-    ).notEmpty(),
-    check(
-      "dosisUtilizada",
-      "La la dosis utilizada  no puede estar vacia"
-    ).notEmpty(),
-    check(
-      "MetodoAplicacion",
-      "El metodo de aplicacion  no puede estar vaci"
-    ).notEmpty(),
-
-    
+    check("idEmpleadooperario","El ID del operario no puede estar vacio").notEmpty(),
+    check("idEmpleadoresponsable","El ID del responsable no puede estar vacio").notEmpty(),
+    check("productocomercial","el producto comercial no puede estar vacio").notEmpty(),
+    check("ingredienteActivo","el ingrediente activo no puede estar vacio").notEmpty(),
+    check("dosisUtilizada","La la dosis utilizada  no puede estar vacia").notEmpty(),
+    check("MetodoAplicacion","El metodo de aplicacion  no puede estar vaci").notEmpty(),
     validarCampos,
-  ],
-  httpSustrato.postSustrato
-);
+  ],httpSustrato.postSustrato);
 
-router.put(
-  "/editar/:id",
-  [
+router.put("/editar/:id",[
     check("id", "se necesita un mongoID que sea valido").isMongoId(),
     check("id").custom(helperSustrato.validarSustratoID),
-    validarCampos,
-  ],
-  httpSustrato.putSustrato
-);
+    validarCampos
+  ],httpSustrato.putSustrato);
 
 export default router;
