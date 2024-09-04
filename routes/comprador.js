@@ -79,4 +79,3 @@ comprador.put('/desactivar/:id', [
 ], httpComprador.putCompradorInactiva)
 
 export default comprador
-
