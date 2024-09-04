@@ -8,7 +8,7 @@ const fertilizacionSchema = new mongoose.Schema({
     tipo:{type:String,required:true},
     nombreFertilizante:{type:String,required:true},
     cantidad:{type:Number,required:true}, 
-    createdAt:{type:Date,default:Date.now}
+    fecha:{type:Date,default:Date.now}
 })
 
 

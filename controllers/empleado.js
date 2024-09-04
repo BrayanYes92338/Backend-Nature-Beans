@@ -21,6 +21,15 @@ const httpEmpleados = {
     const empleado = await Empleado.findById(id);
     res.json({ empleado });
   },
+  getEmpleadoDescripcion: async (req,res) => {
+    try {
+        const { descripcion } = req.params;
+        const ti = await Empleado.find({descripcion})
+        res.json(ti)
+    } catch (error) {
+        res.status(500).json({ mensaje: 'No se encontro la descripcion del Empleado' });
+    }
+},
   postEmpleado: async (req, res) => {
     try {
       const { nombre, documento, correo, direccion, telefono, estudios, descripcion } = req.body;

@@ -14,6 +14,12 @@ router.get('/listarID/:id',[
     check('id').custom(helperFertilizacion.validarFertilizacionID),
     validarCampos
 ],httpFertilizacion.getFertilizacionID)
+
+router.get('/listar/empleado/:id',[],httpFertilizacion.getFertilizacionEmpleado)
+
+router.get('/listar/fechas',[],httpFertilizacion.getFertilizacionFechas)
+
+
  
 router.post('/agregar',[
     check('idCultivo', 'idCultivo no puede estar vacio').notEmpty(),

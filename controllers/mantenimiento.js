@@ -1,4 +1,5 @@
 import Mantenimiento from "../models/mantenimientos.js";
+import mantenimiento from "../routes/mantenimiento.js";
 
 const httpMantenimiento = {
   getMantenimiento: async (req, res) => {
@@ -13,6 +14,7 @@ const httpMantenimiento = {
 
     res.json({ mantenimiento });
   },
+
   getMantenimientoActivo:async (req, res)=>{
     const MantenimientoActivo = await Mantenimiento.find({verificacionRealizada:1}) .populate({
       path: "idMaquinaria",
@@ -31,11 +33,65 @@ getMantenimientoInactivo: async (req, res)=>{
     });
     res.json({MantenimientoInactivo})
 },
+
   getMantenimientoID: async (req, res) => {
     const { id } = req.params;
     const mantenimiento = await Mantenimiento.findById(id);
     res.json({ mantenimiento });
   },
+  getmantenimientoFechas: async (req,res) => {
+
+    const { fechaInicio, fechaFin } = req.body;
+   
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ mensaje: 'Por favor proporciona las fechas de inicio y fin' });
+    }
+   
+    try {
+        const documentos = await Mantenimiento.find({
+            fecha: {
+                $gte: new Date(fechaInicio),
+                $lte: new Date(fechaFin)
+            }
+        })
+        
+   
+        if(documentos.length === 0) {
+            res.json({ message: "No se encontro ninguna mantenimienti entre esas fechas"})
+        }else{
+   
+        res.json({msg:`Se encontro entre las fechas ${fechaInicio} y ${fechaFin} los siguientes mantenimientos`, data: documentos});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+    }
+   
+    },
+  getMantenimientoResponsable: async (req,res) => {
+    try {
+        const { id } = req.params;
+        console.log(id);
+        const empleado = await Mantenimiento.find({responsable: id})
+        .populate({path:"responsable"})
+        
+        res.json(empleado)
+    } catch (error) {
+        res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+    }
+},
+getMantenimientoMaquina: async (req,res) => {
+  try {
+      const { id } = req.params;
+      console.log(id);
+      const maquina = await Mantenimiento.find({idMaquinaria: id})
+      .populate({path:"idMaquinaria"})
+      
+      res.json(maquina)
+  } catch (error) {
+      res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+  }
+},
 
   postMantenimiento: async (req, res) => {
     try {

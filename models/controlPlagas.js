@@ -7,9 +7,9 @@ const ControlPlagaSchema=new mongoose.Schema({
     nombre:{type:String,required:true},
     tipo:{type:String,required:true},
     ingredienteActivo:{type:String,required:true},
-    dosis:{type:Number,required:true},
+    dosis:{type:String,required:true},
     observaciones:{type:String},
-    createdAt:{type:Date,default:Date.now},
+    fecha:{type:Date,default:Date.now},
 })
 
 export default mongoose.model("ControlPlaga",ControlPlagaSchema)

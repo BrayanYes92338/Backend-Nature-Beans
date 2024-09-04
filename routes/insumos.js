@@ -14,21 +14,24 @@ router.get('/listar', [
     validarCampos
   ], httpInsumos.getInsumos)
 
-router.post('/agregar',[
-  validarJWT,
-    validarRol(["ADMIN", "GESTOR"]),
-    check('IdProveedor', 'El id del Proveedor no puede estar vacio').notEmpty(),
-    check('IdProveedor', 'Se debe agregar un id de Proveedor que sea valido').isMongoId(),
-    check('idReponsable', 'El id del Trabajador no puede estar vacio').notEmpty(),
-    check('idReponsable', 'Se debe agregar un id del empleado que sea valido').isMongoId(),
-    check('nombre', 'Se debe agregar un nombre').notEmpty(),
-    check('relacionNPK', 'Se debe agregar la cantidad NPK').notEmpty(),
-    check('cantidad', 'Se debe agregar la cantidad de Insumos').notEmpty(),
-    check('unidad', 'Se debe agregar unidad').notEmpty(),
-    check('observaciones', 'Se debe agregar las observaciones').notEmpty(),
-    check('total', 'Se debe agregar el total').notEmpty(),
-    validarCampos
-], httpInsumos.postInsumos)
+   insumo.get('/listarid/:id', [
+        validarCampos
+    ], httpInsumo.getInsumoID);
+    
+    insumo.post('/agregar', [
+        check('idReponsable', 'se necesita un mongoID que sea valido para id Reponsable').isMongoId(),
+        check('IdProveedor', 'se necesita un mongoID que sea valido para Id Proveedor').isMongoId(),
+        check('idReponsable').custom(helpersInsumo.validarEmpleadoId),
+        check('IdProveedor').custom(helpersInsumo.validarProveedorId),
+        check('idReponsable', 'el id Reponsable no puede estar vacio').notEmpty(),
+        check('IdProveedor', 'la Id Proveedor no puede estar vacio').notEmpty(),
+        check('nombre', 'el nombre no puede estar vacio').notEmpty(),
+        check('relacionNPK','la relacionNPK  no puede estar vacio').notEmpty(),
+        check('cantidad', 'La cantidad  no puede estar vacia').notEmpty(),
+        check('precio', 'La precio no puede estar vacia').notEmpty(),
+        check('observaciones', 'La observaciones no puede estar vacia').notEmpty(),
+        validarCampos
+    ], httpInsumo.postInsumo) 
 
 router.put('/editar/:id', [
   validarJWT,
@@ -37,6 +40,7 @@ router.put('/editar/:id', [
     check('id').custom(helperInsumo.validarInsumoID),
     validarCampos
 ], httpInsumos.putInsumos)
+
 
 
   export default router

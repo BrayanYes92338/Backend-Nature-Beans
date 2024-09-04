@@ -15,9 +15,15 @@ const httpinventario = {
         res.json({inv})
     },
     getInventarioCant: async (req ,res)=>{
-        const {cantidad}= req.params;
-        const inv = await Inventario.findById(cantidad);
-        res.json({inv})
+
+        try {       
+            const {cantidad}= req.params;
+            console.log(cantidad);
+            const inv = await Inventario.find({cantidad});
+            res.json({inv})
+        } catch (error) {
+        res.status(500).json({ mensaje: 'No se encontro esa cantidad en el inventario' });
+        }
     }, 
     postInventario: async (req, res)=>{
         try{

@@ -15,6 +15,18 @@ mantenimiento.get('/listar', [
     validarCampos
 ], httpMantenimiento.getMantenimiento);
 
+mantenimiento.get('/listar/fechas', [
+    validarCampos
+], httpMantenimiento.getmantenimientoFechas);
+
+mantenimiento.get('/listar/responsable/:id', [
+    validarCampos
+], httpMantenimiento.getMantenimientoResponsable);
+
+mantenimiento.get('/listar/maquina/:id', [
+    validarCampos
+], httpMantenimiento.getMantenimientoMaquina);
+
 mantenimiento.get('/listarid/:id', [
     validarJWT,
     validarRol(["ADMIN", "GESTOR"]),
@@ -32,6 +44,7 @@ mantenimiento.get('/inactivos', [
     validarRol(["ADMIN", "GESTOR"]),
     validarCampos
 ], httpMantenimiento.getMantenimientoInactivo)
+
 mantenimiento.post('/agregar', [
     validarJWT,
     validarRol(["ADMIN", "GESTOR"]),

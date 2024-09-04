@@ -7,13 +7,21 @@ const httpCultivo = {
     const cultivo = await Cultivo.find({
       $or: [{ nombre: new RegExp(buscar, "i") }],
     })
-    
     .populate({
       path:'idParcela'
      }) 
 
      res.json({ cultivo })
   },
+  getCultivoTipo: async (req,res) => {
+    try {
+        const { tipo } = req.params;
+        const ti = await Cultivo.find({tipo})
+        res.json(ti)
+    } catch (error) {
+        res.status(500).json({ mensaje: 'No se encontro el tipo de cultivo' });
+    }
+},
   getCultivoID: async (req, res) => {
     const { id } = req.params;
     const cultivo = await Cultivo.findById(id);

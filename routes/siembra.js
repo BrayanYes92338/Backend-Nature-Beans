@@ -13,6 +13,12 @@ router.get("/listarID/:id",[
     validarCampos,
 ],httpSiembra.getSiembraID)
 
+router.get("/listar/fechas",[],httpSiembra.getSiembraFechas)
+
+router.get("/listar/empleado/:id",[],httpSiembra.getSiembraEmpleado)
+
+router.get("/listar/cultAnterior/:cultivoAnterior",[],httpSiembra.getSiembraCultAnterior)
+
 router.post("/agregar",[
     check("idCultivo", "El idcultivo no puede estar vacio").notEmpty(),
     check("idEmpleados", "El idEmpleados no puede estar vacio").notEmpty(),

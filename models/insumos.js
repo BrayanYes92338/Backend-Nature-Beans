@@ -7,9 +7,9 @@ const insumoSchema=new mongoose.Schema({
     fecha:{type:Date, default:Date.now},
     relacionNPK:{type:String,required:true},
     cantidad:{type:Number,default:0},
-    unidad:{type:String,required:true},
+    precio:{type:Number,required:true},
     observaciones:{type:String,required:true},
-    total:{type:Number,required:true},
+    total:{type:Number,default:0},
 })
 
 export default mongoose.model("Insumo",insumoSchema)
