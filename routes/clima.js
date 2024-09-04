@@ -9,9 +9,12 @@ import helperClima from '../helpers/clima.js'
 
 const router = Router()
 
-router.get('/listar',[ validarCampos], httpClima.getClima)
 
-
+  router.get('/listar',[
+    validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    validarCampos], httpClima.getClima)
+    
     router.get('/listarid/:id', [
         validarCampos
     ], httpClima.getClimaID);

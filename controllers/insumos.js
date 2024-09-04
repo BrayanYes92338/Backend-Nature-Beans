@@ -1,22 +1,24 @@
-import Insumo from "../models/insumos.js";
+import Insumo from "../models/insumos.js"
 
+const httpInsumos = {
 
-
-const httpInsumo = {
-  getInsumo: async (req, res) => {
-    const insumo = await Insumo.find()
-    res.json({ insumo });
+  getInsumos: async (req, res)=>{
+    const {buscar} = req.query;
+    const insumo = await Insumo.find({
+      $or: [{ nombre: new RegExp(buscar, "i")}]
+    })
+    .populate({
+      path: 'IdProveedor'
+  })
+  .populate({
+      path: 'idReponsable'
+  });
+    res.json ({insumo})
   },
-
-
-  getInsumoID: async (req, res) => {
-    const { id } = req.params;
-    const insumo = await Insumo.findById(id);
-    res.json({ insumo });
-  },
-
-  postInsumo: async (req, res) => {
+  
+  postInsumos: async (req, res) => {
     try {
+
       const  {IdProveedor,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones} = req.body;
 
       const totl = cantidad*precio
@@ -24,22 +26,20 @@ const httpInsumo = {
       const insumo = new Insumo({IdProveedor,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones,total:totl})
       await insumo.save()
       res.json({ insumo })
-
     } catch (error) {
-      console.log(error)
-      res.status(400).json({ msg: 'Error no se pudo agregar datos de el  insumo' })
+      console.log(error);
+      res.status(400).json({ msg: "Error no se pudo crear el registro de Insumos" });
     }
   },
+  
 
-  putInsumo: async (req, res) => {
+  putInsumos: async (req, res)=>{
     const { id } = req.params;
-    const { IdProveedor, ...resto } = req.body;
-    const insumo = await Insumo.findByIdAndUpdate(id, { IdProveedor, ...resto }, { new: true })
-    res.json({ insumo })
-  },
-
+    const {IdProveedor,...resto} = req.body;
+    const insumos = await Insumo.findByIdAndUpdate(id, {IdProveedor,...resto}, {new: true} )
+    res.json({insumos})
+  }
 
 }
 
-
-export default httpInsumo
+export default httpInsumos

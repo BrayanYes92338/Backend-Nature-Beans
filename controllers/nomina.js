@@ -12,21 +12,18 @@ const httpNomina = {
     res.json({ nominas });
   },
   getNominaActiva: async (req, res) => {
-    try {
-      const nominaActiva = await Nomina.find({ estado: 1 });
-      res.json({ nomina: nominaActiva });
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener nomina activa' });
-    }
+  const nominas = await Nomina.find({ estado: 1 })
+  .populate({
+    path: 'idEmpleado'
+  });
+  res.json({ nominas })
   },
   getNominaInactiva: async (req, res) => {
-    try {
-      const nominaInactiva = await Nomina.find({ estado: 0 });
-      res.json({ nomina: nominaInactiva });
-
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener nomina inactiva' });
-    }
+    const nominas = await Nomina.find({ estado: 0 })
+    .populate({
+      path: 'idEmpleado'
+    });
+  res.json({ nominas })
   },
   getNominaID: async (req, res) => {
     const { id } = req.params;

@@ -7,6 +7,9 @@ const httpmaquinariaHerramientas = {
         const maquinas = await MaquinariaHerramientas.find({
             $or:[{tipo: new RegExp(buscar, "i")}]
         })
+        .populate({
+            path: 'idProveedor'
+        });
         res.json({maquinas})
     },
     getMaquinariaHerramientasID: async (req ,res)=>{

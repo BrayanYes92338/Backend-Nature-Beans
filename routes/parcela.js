@@ -14,7 +14,25 @@ router.get('/listar', [
     validarCampos
 ], httpParcela.getParcela)
 
-router.get("/listar/asistente/:id",[],httpParcela.getParcelaAsistente)
+
+router.get("/listar/asistente/:id",[
+   validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    validarCampos
+],httpParcela.getParcelaAsistente)
+
+router.get('/listarParcelaActiva', [
+    validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    validarCampos
+], httpParcela.getParcelaActivas)
+
+router.get('/listarParcelaInactiva', [
+    validarJWT,
+    validarRol(["ADMIN", "GESTOR"]),
+    validarCampos
+], httpParcela.getParcelaInactiva)
+
 
 router.post('/agregar', [
     validarJWT,
