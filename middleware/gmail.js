@@ -19,7 +19,7 @@ export const sendEmail = async (correo) => {
             from: '"Natures Beans" <dfggdfgdf@gmail.com>',
             to: correo,
             subject: "Solicitud de cambio de contraseña",
-            text: 'Haz click en el siguiente enlace para restablecer tu contraseña: http://localhost:5173/#/actualizar?correo=' + correo
+            text: 'Haz click en el siguiente enlace para restablecer tu contraseña: https://naturesbeans.netlify.app/#/actualizar?correo=' + correo
         };
 
         transporter.sendMail(mailOptions, (error, info) => {

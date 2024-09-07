@@ -33,9 +33,9 @@ const httpUsuarios = {
     postUsuarios: async (req, res) => {
         try {
             const salt = bcryptjs.genSaltSync(10)
-            const { nombre, direccion, documento, correo, password, telefono, rol, municipio } = req.body;
+            const { nombre, direccion, documento, correo, password, telefono, rol,departamento, municipio } = req.body;
 
-            const usuarios = new Usuario({ nombre, direccion, documento, correo, password, telefono, rol, municipio })
+            const usuarios = new Usuario({ nombre, direccion, documento, correo, password, telefono, rol,departamento, municipio })
 
             usuarios.password = bcryptjs.hashSync(password, salt)
          await usuarios.save();
@@ -69,20 +69,20 @@ const httpUsuarios = {
 
             if(!user){
                 return res.status(401).json({
-                  msg: "Usuario/Contraseña no son  correctos/No esta agregado a la base de datos"
+                  msg: "Usuario/Contraseña no son  correctos"
                 })
               }
         
               if(user.estado === 0){
                 return res.status(401).json({
-                  msg: "Usuario/Contraseña no son  correctos/ No esta activo"
+                  msg: "Usuario/Contraseña no son  correctos"
                 })
               }
         
               const validPassword = bcryptjs.compareSync(password,user.password);
               if(!validPassword){
                 return res.status(401).json({
-                  msg: "Usuario/Contraseña no son  correctos/contra incorrecta"
+                  msg: "Usuario/Contraseña no son  correctos"
                 })
               }
         
@@ -140,5 +140,7 @@ const httpUsuarios = {
     }
 
 }
+
+
 
 export default httpUsuarios
