@@ -1,4 +1,6 @@
 import MaquinariaHerramientas from "../models/maquinariaHerramientas.js";
+import Inventario from "../models/inventarios.js";
+
 
 const httpmaquinariaHerramientas = {
 
@@ -63,8 +65,14 @@ const httpmaquinariaHerramientas = {
            const totl = cantidad * precio
 
             const maquinas = new MaquinariaHerramientas({idProveedor,nombre,tipo,observaciones,cantidad,precio,total: totl})
-            await maquinas.save()
+            await maquinas.save()            
+
+            const invent = new Inventario({idMaquinaria: maquinas._id, total: maquinas.total})
+            await invent.save()            
+
             res.json({maquinas})
+            
+
 
         }catch(error){
             console.log(error)

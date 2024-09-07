@@ -6,8 +6,10 @@ const httpinventario = {
         const {buscar} = req.query;
         const inv = await Inventario.find({
             $or:[{tipo: new RegExp(buscar, "i")}]
-        })
-        res.json({inv})
+        }).populate({path:"idInsumo"})
+        .populate({path:"idSemilla"})
+        .populate({path:"idMaquinaria"})
+        res.json({inv})   
     },
     getInventarioID: async (req ,res)=>{
         const {id}= req.params;
@@ -25,19 +27,32 @@ const httpinventario = {
         res.status(500).json({ mensaje: 'No se encontro esa cantidad en el inventario' });
         }
     }, 
-    postInventario: async (req, res)=>{
-        try{
-            const {idInsumo, idSemilla, idMaquinaria, tipo, observaciones, cantidad, unidad} = req.body;
+    getInventarioTotalizar: async (req, res) => {
 
-            const inv = new Inventario({idInsumo, idSemilla, idMaquinaria, tipo, observaciones, cantidad, unidad})
-            await inv.save()
-            res.json({inv})
-
-        }catch(error){
-            console.log(error)
-            res.status(400).json({msg: 'Error no se pudo agregar al inventario'})
+        let acum = 0
+    
+        const total = await Inventario.find();
+    
+        for (let i = 0; i < total.length; i++) {
+          const element = total[i];
+          acum = acum + element.total
         }
-    },
+    
+        res.json({msg:`El valor total del inventario es ${acum}`, data: total});
+      },
+    // postInventario: async (req, res)=>{
+    //     try{
+    //         const {idInsumo, idSemilla, idMaquinaria, tipo, observaciones, cantidad, unidad} = req.body;
+
+    //         const inv = new Inventario({idInsumo, idSemilla, idMaquinaria, tipo, observaciones, cantidad, unidad})
+    //         await inv.save()
+    //         res.json({inv})
+
+    //     }catch(error){
+    //         console.log(error)
+    //         res.status(400).json({msg: 'Error no se pudo agregar al inventario'})
+    //     }
+    // },
     putInventario: async (req ,res)=>{
         const {id}=req.params;
         const {idInventario,...resto} = req.body;

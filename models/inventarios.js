@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 
 const inventarioSchema=new mongoose.Schema({
-    idInsumo:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"Insumo"},
-    idSemilla:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"Semilla"},
-    idMaquinaria:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"Maquinaria"},
-    tipo:{type:String,required:true},
-    observaciones:{type:String,required:true},
+    idInsumo:{type:mongoose.Schema.Types.ObjectId,ref:"Insumo"},
+    idSemilla:{type:mongoose.Schema.Types.ObjectId,ref:"Semilla"},
+    idMaquinaria:{type:mongoose.Schema.Types.ObjectId,ref:"Maquinaria"},
+    tipo:{type:String,default:""},
+    observaciones:{type:String,default:""},
     cantidad:{type:Number,default:0},
-    unidad:{type:Number,required:true},
+    unidad:{type:String,default:""},
+    total:{type:Number,default:0},
     fecha:{type:Date, default:Date.now}
 })
 
