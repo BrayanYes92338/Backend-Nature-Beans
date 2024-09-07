@@ -1,4 +1,6 @@
-import Insumo from "../models/insumos.js"
+import Insumo from "../models/insumos.js";
+import Inventario from "../models/inventarios.js";
+
 
 const httpInsumos = {
 
@@ -25,6 +27,9 @@ const httpInsumos = {
 
       const insumo = new Insumo({IdProveedor,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones,total:totl})
       await insumo.save()
+
+      const invent = new Inventario({idInsumo:insumo._id, total: insumo.total})
+      await invent.save()            
       res.json({ insumo })
     } catch (error) {
       console.log(error);

@@ -9,6 +9,7 @@ const insumoSchema=new mongoose.Schema({
     cantidad:{type:Number,default:0},
     precio:{type:Number,required:true},
     observaciones:{type:String,required:true},
+    unidad:{type:String,default:0},
     total:{type:Number,default:0},
 })
 

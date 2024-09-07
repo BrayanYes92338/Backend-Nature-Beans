@@ -1,4 +1,5 @@
 import Semilla from "../models/semillas.js";
+import Inventario from "../models/inventarios.js";
 
 const httpSemillas = {
   getSemillas: async (req, res) => {
@@ -11,7 +12,7 @@ const httpSemillas = {
     const semilla = await Semilla.findById(id);
     res.json({ semilla });
   },
-  getProveedores:async (req, res) => {
+  getProveedores:async (req, res) => { 
     const { idProveedores } = req.params;
     try {
       const semillas = await Semilla.find(idProveedores).populate("idProveedor")
@@ -29,6 +30,9 @@ const httpSemillas = {
       const {idProveedor,numFactura,fechaCompra,fechaVencimiento,especie,variedad,NumLote,origen,poderGerminativo,total} = req.body;
       const semilla = new Semilla({idProveedor,numFactura,fechaCompra,fechaVencimiento,especie,variedad,NumLote,origen,poderGerminativo,total});
       await semilla.save();
+
+      const invent = new Inventario({idSemilla: semilla._id, total: semilla.total})
+      await invent.save() 
       res.json({ semilla });
     } catch (error) {
       console.log(error);
