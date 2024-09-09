@@ -33,9 +33,9 @@ const httpUsuarios = {
     postUsuarios: async (req, res) => {
         try {
             const salt = bcryptjs.genSaltSync(10)
-            const { nombre, direccion, documento, correo, password, telefono, rol, municipio } = req.body;
+            const { nombre, direccion, documento, correo, password, telefono, rol,departamento, municipio } = req.body;
 
-            const usuarios = new Usuario({ nombre, direccion, documento, correo, password, telefono, rol, municipio })
+            const usuarios = new Usuario({ nombre, direccion, documento, correo, password, telefono, rol,departamento, municipio })
 
             usuarios.password = bcryptjs.hashSync(password, salt)
          await usuarios.save();

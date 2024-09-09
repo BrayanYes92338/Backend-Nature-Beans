@@ -1,24 +1,24 @@
-import analisisSuelo from "../models/analisisSuelo.js";
+import AnalisisSuelo from "../models/analisisSuelo.js";
 
 const httpAnalisisSuelo = {
   getAnalisis: async (req, res) => {
     const {buscar} = req.query;
-    const Analisis = await analisisSuelo.find({
+    const analisis = await AnalisisSuelo.find({
         $or: [{muestra: new RegExp(buscar,"i")}]
       })
       .populate({path:"idParcela"})
       .populate({path:"idEmpleado"});
-    res.json({ Analisis });
+    res.json({ analisis });
   },
   getAnalisisId: async (req, res) => {
     const { id } = req.params;
-    const analisis = await analisisSuelo.findById(id);
+    const analisis = await AnalisisSuelo.findById(id);
     res.json({ analisis });
   },
   getResponsables: async (req, res) => {
     const { idEmpleado } = req.params;
     try {
-      const analisis = await analisisSuelo
+      const analisis = await AnalisisSuelo
         .find(idEmpleado)
         .populate("idParcela")
         .populate("idEmpleado");
@@ -30,41 +30,40 @@ const httpAnalisisSuelo = {
         .json({ error: "Error al obtener los análisis por responsable" });
     }
   },
-  getAnalisisEntreFechas: async (req, res) => {
-    try {
-      const { fechaInicio, fechaFin } = req.query;
-      console.log(fechaFin, fechaInicio);
-      if (!fechaInicio || !fechaFin) {
-        return res
-          .status(400)
-          .json({ error: "Se requieren fechas de inicio y fin" });
-      }
+  getAnalisisFechas: async (req,res) => {
 
-      const startDate = new Date(fechaInicio);
-      const endDate = new Date(fechaFin);
-
-      if (isNaN(startDate) || isNaN(endDate)) {
-        return res.status(400).json({ error: "Fechas inválidas" });
-      }
-
-      const analisis = await analisisSuelo.find({
-        createdAt: {
-          $gte: startDate,
-          $lte: endDate,
-        },
-      });
-      res.json({ analisis });
-    } catch (error) {
-      console.error("Error al obtener las ventas entre fechas:", error);
-      res
-        .status(500)
-        .json({ error: "Error al obtener las ventas entre fechas" });
+    const { fechaInicio, fechaFin } = req.body;
+   
+    if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ mensaje: 'Por favor proporciona las fechas de inicio y fin' });
     }
-  },
+   
+    try {
+        const documentos = await AnalisisSuelo.find({
+            fecha: {
+                $gte: new Date(fechaInicio),
+                $lte: new Date(fechaFin)
+            }
+        })
+        
+   
+        if(documentos.length === 0) {
+            res.json({ message: "No se encontro ningun analisis entre esas fechas"})
+        }else{
+   
+        res.json({msg:`Se encontro entre las fechas ${fechaInicio} y ${fechaFin} los siguientes analisis de suelos`, data: documentos});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+    }
+   
+    },
+  
   postAnalisis: async (req, res) => {
     try {
       const {idParcela,idEmpleado, muestra,cultivo,laboratorio,resultados,recomendaciones } = req.body;
-      const analisis = new analisisSuelo({idParcela,idEmpleado, muestra,cultivo,laboratorio,resultados,recomendaciones});
+      const analisis = new AnalisisSuelo({idParcela,idEmpleado, muestra,cultivo,laboratorio,resultados,recomendaciones});
 
       await analisis.save();
       res.json({ analisis });
@@ -76,7 +75,7 @@ const httpAnalisisSuelo = {
   putAnalisis: async (req, res) => {
     const { id } = req.params;
     const { idParcela, ...resto } = req.body;
-    const analisis = await analisisSuelo.findByIdAndUpdate(
+    const analisis = await AnalisisSuelo.findByIdAndUpdate(
       id,
       { idParcela, ...resto },
       { new: true }

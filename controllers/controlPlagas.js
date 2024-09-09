@@ -1,6 +1,4 @@
 import ControlPlaga from "../models/controlPlagas.js"
-import Cultivo from '../models/cultivo.js'
-import Empleado from "../models/empleado.js"
 
 const httpControlPlaga={
     getControlPlaga: async (req, res)=>{
@@ -12,7 +10,6 @@ const httpControlPlaga={
         .populate({
             path: 'idCultivo'
         })
-
         .populate({
             path: 'idEmpleado'
         })
@@ -21,13 +18,54 @@ const httpControlPlaga={
         });
         res.json({controlPlagas})
     },
-
-    getControlPlagaID: async (req, res) => {
-        const { id } = req.params;
-        const controlPlagas = await ControlPlaga.findById(id);
-        res.json({ controlPlagas })
+    getControlPlagaTipo: async (req,res) => {
+        try {
+            const { tipo } = req.params;
+            const ti = await ControlPlaga.find({tipo})
+            res.json(ti)
+        } catch (error) {
+            res.status(500).json({ mensaje: 'No se encontro el tipo Control de plaga' });
+        }
     },
+    getControlPlagaFechas: async (req,res) => {
 
+        const { fechaInicio, fechaFin } = req.body;
+       
+        if (!fechaInicio || !fechaFin) {
+            return res.status(400).json({ mensaje: 'Por favor proporciona las fechas de inicio y fin' });
+        }
+       
+        try {
+            const documentos = await ControlPlaga.find({
+                fecha: {
+                    $gte: new Date(fechaInicio),
+                    $lte: new Date(fechaFin)
+                }
+            })
+            
+       
+            if(documentos.length === 0) {
+                res.json({ message: "No se encontro ningun Control de Plaga entre esas fechas"})
+            }else{
+       
+            res.json({msg:`Se encontro entre las fechas ${fechaInicio} y ${fechaFin} las siguientes Controles de Plagas`, data: documentos});
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+        }
+       
+        },
+        getControlPlagaOperario: async (req,res) => {
+            try {
+                const { id } = req.params;
+                const empleado = await ControlPlaga.find({idOperario: id})
+                .populate({path:"idOperario"})
+                res.json(empleado)
+            } catch (error) {
+                res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+            }
+        },
     postControlPlaga:async (req,res)=>{
         try {
             const {idCultivo,idEmpleado,idOperario,nombre,tipo,ingredienteActivo,dosis,observaciones} = req.body;

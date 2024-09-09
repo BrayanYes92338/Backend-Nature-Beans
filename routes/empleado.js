@@ -9,18 +9,21 @@ import helperEmpleado from "../helpers/empleado.js";
 const router = Router();
 
 router.get("/listar", [
-
   validarCampos], httpEmpleados.getEmpleados);
+
 router.get("/activos", [
   validarJWT,
   validarRol(["ADMIN", "GESTOR"]),validarCampos], httpEmpleados.getEmpleadoActivo);
+
 router.get("/inactivos", [
   validarJWT,
   validarRol(["ADMIN", "GESTOR"]),
   validarCampos], httpEmpleados.getEmpleadoInactivo);
+
+  router.get("/listar/desc/:descripcion", [
+    validarCampos], httpEmpleados.getEmpleadoDescripcion);
+
 router.post("/agregar",[
-  validarJWT,
-  validarRol(["ADMIN", "GESTOR"]),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("direccion", "La direccion no puede estar vacia").notEmpty(),
     check("documento", "El documento no puede estar vacio").notEmpty(),

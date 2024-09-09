@@ -8,6 +8,7 @@ import helperSemillas from "../helpers/semillas.js";
 const semilla = Router();
 
 semilla.get("/listar", httpSemillas.getSemillas);
+
 semilla.get("/listarid/:id", [
   check('id', 'Se necesita un mongoID que sea valido').isMongoId(),
   check('id').custom(helperSemillas.validarSemillaID),

@@ -10,6 +10,7 @@ const SemillaSchema = new mongoose.Schema({
     NumLote:{type: Number,required:true},
     origen:{type: String,required:true},
     poderGerminativo:{type: String,required:true},
+    total:{type: Number, required: true},
     estado:{type:Number,default:1},
 })
 

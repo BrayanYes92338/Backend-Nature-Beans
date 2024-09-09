@@ -17,6 +17,46 @@ const httpFertilizacion ={
         const fert = await Fertilizacion.findById(id);
         res.json({fert})
     },
+    getFertilizacionEmpleado: async (req,res) => {
+        try {
+            const { id } = req.params;
+            const empleado = await Fertilizacion.find({idEmpleado: id})
+            .populate({path:"idEmpleado"})
+            res.json(empleado)
+        } catch (error) {
+            res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+        }
+    },
+    getFertilizacionFechas: async (req,res) => {
+
+        const { fechaInicio, fechaFin } = req.body;
+
+        if (!fechaInicio || !fechaFin) {
+            return res.status(400).json({ mensaje: 'Por favor proporciona las fechas de inicio y fin' });
+        }
+    
+        try {
+            const documentos = await Fertilizacion.find({
+                fecha: {
+                    $gte: new Date(fechaInicio),
+                    $lte: new Date(fechaFin)
+                }
+            })
+
+        
+            if(documentos.length === 0) {
+                res.json({ message: "No se encontro ninguna Fertilizacion entre esas fechas"})
+            }else{
+            
+            res.json({msg:`Se encontro entre las fechas ${fechaInicio} y ${fechaFin} las siguientes Fertilizaciones`, data: documentos});
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+        }
+    
+        },
+
     postFertilizacion: async (req, res)=>{
         try{
             const {idCultivo,idEmpleado,idInventario,estadoFenologico,tipo,nombreFertilizante,cantidad} = req.body;

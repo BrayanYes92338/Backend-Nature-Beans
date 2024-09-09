@@ -5,7 +5,7 @@ const maquinariaSchema=new mongoose.Schema({
     nombre:{type:String,required:true},
     tipo:{type:String,required:true},
     observaciones:{type:String,required:true},
-    cantidad:{type:String,required:true},
+    cantidad:{type:Number,required:true},
     precio:{type:Number,required:true},
     total:{type:Number,default:0},
     fechaCompra:{type:Date, default:Date.now}

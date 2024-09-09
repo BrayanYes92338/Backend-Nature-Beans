@@ -7,14 +7,11 @@ const httpProceso={
         const {buscar}=req.query;
         const procesos = await Proceso.find({
             $or:[{
-                tipo:new RegExp(buscar, "i")}]
-        })
+                tipo:new RegExp(buscar, "i")}]})
         .populate({
-            path: 'idCultivo'
-        })
+            path: 'idCultivo'})
         .populate({
-            path: 'idEmpleado'
-        });
+            path: 'idEmpleado'});
         res.json({procesos})
     },
 
@@ -24,6 +21,55 @@ const httpProceso={
         res.json({ procesos })
     },
    
+    getProcesoEmpleado: async (req,res) => {
+        try {
+            const { id } = req.params;
+            const empleado = await Proceso.find({idEmpleado: id})
+            .populate({path:"idEmpleado"})
+            res.json(empleado)
+        } catch (error) {
+            res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+        }
+    },
+    getProcesosFechas: async (req,res) => {
+
+        const { fechaInicio, fechaFin } = req.body;
+       
+        if (!fechaInicio || !fechaFin) {
+            return res.status(400).json({ mensaje: 'Por favor proporciona las fechas de inicio y fin' });
+        }
+       
+        try {
+            const documentos = await Proceso.find({
+                fecha: {
+                    $gte: new Date(fechaInicio),
+                    $lte: new Date(fechaFin)
+                }
+            })
+            
+       
+            if(documentos.length === 0) {
+                res.json({ message: "No se encontro ningun proceso entre esas fechas"})
+            }else{
+       
+            res.json({msg:`Se encontro entre las fechas ${fechaInicio} y ${fechaFin} los siguientes Procesos`, data: documentos});
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+        }
+       
+        },
+        getProcesoTipo: async (req,res) => {
+            try {
+                const { tipo } = req.params;
+                const ti = await Proceso.find({tipo})
+                res.json(ti)
+            } catch (error) {
+                res.status(500).json({ mensaje: 'No se encontro el tipo de proceso' });
+            }
+        },
+
     postProceso:async (req,res)=>{
         try {
             const {idCultivo,idEmpleado,tipo,descripcion,fechaInicio,fechaFinal} = req.body;
