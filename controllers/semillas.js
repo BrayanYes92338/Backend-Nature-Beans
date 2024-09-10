@@ -36,7 +36,7 @@ const httpSemillas = {
   getProveedores:async (req, res) => { 
     const { idProveedores } = req.params;
     try {
-      const semillas = await Semilla.find(idProveedores).populate("idProveedor")
+      const semilla = await Semilla.find(idProveedores).populate("idProveedor")
 
       res.json({semilla});
     } catch (error) {
@@ -71,22 +71,7 @@ const httpSemillas = {
     );
     res.json({ semilla });
   },
-  getSemillaActivo: async (req, res) => {
-    try {
-      const semillaActivos = await Semilla.find({ estado:1});
-      res.json({ semilla: semillaActivos });
-    } catch (error) {
-      res.status(500).json({ error: "Error al obtener semillas activos" });
-    }
-  },
-  getSemillaInactivo: async (req, res) => {
-    try {
-      const semillaInactivos = await Semilla.find({estado:0});
-      res.json({ semilla: semillaInactivos });
-    } catch (error) {
-      res.status(500).json({ error: "Error al obtener semillas inactivos" });
-    }
-  },
+ 
   putSemillaActiva: async (req, res) => {
     const { id } = req.params;
     const semilla = await Semilla.findByIdAndUpdate(

@@ -11,7 +11,7 @@ const router = Router();
 
 router.get("/listar", [validarJWT,  validarRol(["ADMIN", "GESTOR"]),validarCampos, ], httpCultivo.getCultivo);
 router.get("/activos", [validarJWT, validarRol(["ADMIN", "GESTOR"]),validarCampos, ], httpCultivo.getCultivoActivo);
-router.get("/inactivos", [validarJWT, validarRol(["ADMIN", "GESTOR"]), validarCampos, ], httpCultivo.getCultivoActivo);
+router.get("/inactivos", [validarJWT, validarRol(["ADMIN", "GESTOR"]), validarCampos, ], httpCultivo.getCultivoInactivo);
 
 router.post("/agregar", [
     validarJWT,
