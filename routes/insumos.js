@@ -26,7 +26,6 @@ router.post('/agregar',[
     check('cantidad', 'Se debe agregar la cantidad de Insumos').notEmpty(),
     check('unidad', 'Se debe agregar unidad').notEmpty(),
     check('observaciones', 'Se debe agregar las observaciones').notEmpty(),
-    check('total', 'Se debe agregar el total').notEmpty(),
     validarCampos
 ], httpInsumos.postInsumos)
 

@@ -21,11 +21,11 @@ const httpInsumos = {
   postInsumos: async (req, res) => {
     try {
 
-      const  {IdProveedor,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones} = req.body;
+      const  {IdProveedor,unidad,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones} = req.body;
 
       const totl = cantidad*precio
 
-      const insumo = new Insumo({IdProveedor,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones,total:totl})
+      const insumo = new Insumo({IdProveedor,unidad,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones,total:totl})
       await insumo.save()
 
       const invent = new Inventario({idInsumo:insumo._id, total: insumo.total})
