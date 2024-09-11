@@ -38,13 +38,23 @@ const httpInsumos = {
   },
   
 
+  // putInsumos: async (req, res)=>{
+  //   const { id } = req.params;
+  //   const {IdProveedor,...resto} = req.body;
+  //   const insumos = await Insumo.findByIdAndUpdate(id, {IdProveedor,...resto}, {new: true} )
+  //   res.json({insumos})
+  // }
+
+
   putInsumos: async (req, res)=>{
     const { id } = req.params;
-    const {IdProveedor,...resto} = req.body;
-    const insumos = await Insumo.findByIdAndUpdate(id, {IdProveedor,...resto}, {new: true} )
+    const {IdProveedor,unidad,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones} = req.body;
+
+    const totl = cantidad*precio
+
+    const insumos = await Insumo.findByIdAndUpdate(id, {IdProveedor,unidad,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones,total:totl}, {new: true} )
     res.json({insumos})
   }
-
 }
 
 export default httpInsumos

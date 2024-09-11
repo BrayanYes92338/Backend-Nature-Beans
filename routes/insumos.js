@@ -9,14 +9,10 @@ import helperInsumo from "../helpers/insumos.js"
 const router = Router()
 
 router.get('/listar', [
-    validarJWT,
-    validarRol(["ADMIN", "GESTOR"]),
-    validarCampos
+    validarCampos 
   ], httpInsumos.getInsumos)
 
 router.post('/agregar',[
-  validarJWT,
-    validarRol(["ADMIN", "GESTOR"]),
     check('IdProveedor', 'El id del Proveedor no puede estar vacio').notEmpty(),
     check('IdProveedor', 'Se debe agregar un id de Proveedor que sea valido').isMongoId(),
     check('idReponsable', 'El id del Trabajador no puede estar vacio').notEmpty(),
@@ -30,8 +26,6 @@ router.post('/agregar',[
 ], httpInsumos.postInsumos)
 
 router.put('/editar/:id', [
-  validarJWT,
-    validarRol(["ADMIN", "GESTOR"]),
     check('id', 'Se necesita un mongoID que sea valido').isMongoId(),
     check('id').custom(helperInsumo.validarInsumoID),
     validarCampos
