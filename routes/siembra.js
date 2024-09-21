@@ -22,7 +22,7 @@ router.get("/listar/cultAnterior/:cultivoAnterior",[],httpSiembra.getSiembraCult
 router.post("/agregar",[
     check("idCultivo", "El idcultivo no puede estar vacio").notEmpty(),
     check("idEmpleados", "El idEmpleados no puede estar vacio").notEmpty(),
-    check("idInventario", "El idInventario no puede estar vacio").notEmpty(),
+    check("idSemilla", "El idSemilla no puede estar vacio").notEmpty(),
     check("cultivoAnterior", "El cultivoAnterior no puede estar vacio").notEmpty(),
     check("transplante", "El transplante no puede estar vacio").notEmpty(),
     validarCampos

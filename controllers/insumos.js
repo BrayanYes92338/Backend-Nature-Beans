@@ -1,5 +1,4 @@
 import Insumo from "../models/insumos.js";
-import Inventario from "../models/inventarios.js";
 
 
 const httpInsumos = {
@@ -10,33 +9,26 @@ const httpInsumos = {
       $or: [{ nombre: new RegExp(buscar, "i")}]
     })
     .populate({
-      path: 'IdProveedor'
+      path: 'idFinca'
   })
-  .populate({
-      path: 'idReponsable'
-  });
     res.json ({insumo})
   },
   
   postInsumos: async (req, res) => {
     try {
 
-      const  {IdProveedor,unidad,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones} = req.body;
+      const  {idFinca,nombre,relacionNPK,registro_ICA,registro_Invima,cantidad,precio,observaciones,unidad} = req.body;
 
       const totl = cantidad*precio
 
-      const insumo = new Insumo({IdProveedor,unidad,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones,total:totl})
-      await insumo.save()
-
-      const invent = new Inventario({idInsumo:insumo._id, total: insumo.total})
-      await invent.save()            
+      const insumo = new Insumo({idFinca,nombre,relacionNPK,registro_ICA,registro_Invima,cantidad,precio,observaciones,unidad,total:totl})
+      await insumo.save()         
       res.json({ insumo })
     } catch (error) {
       console.log(error);
-      res.status(400).json({ msg: "Error no se pudo crear el registro de Insumos" });
+      res.status(400).json({ msg: "Error no se pudo crear el registro de Insumos" }); 
     }
   },
-  
 
   // putInsumos: async (req, res)=>{
   //   const { id } = req.params;

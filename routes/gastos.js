@@ -18,12 +18,11 @@ router.get("/listar/fechas",[],httpGastos.getGastosEntreFechas)
 router.get("/listar/total",[],httpGastos.getGastosTotal)
 
 router.post("/agregar",[
-    check("idInsumo", "El idInsumo no puede estar vacio").notEmpty(),
-    check("idSemilla", "El idSemilla no puede estar vacio").notEmpty(),
-    check("idMantenimiento", "El idMantenimiento no puede estar vacio").notEmpty(),
+    check("idFinca", "El idFinca no puede estar vacio").notEmpty(),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
+    check("semillas", "El semillas no puede estar vacio").notEmpty(),
+    check("insumo", "El insumo no puede estar vacio").notEmpty(),
     check("numerofactura", "El numerofactura no puede estar vacio").notEmpty(),
-    check("numerofactura").custom(helperGastos.validarNumFacturaUnico),
     check("descripcion", "El descripcion no puede estar vacio").notEmpty(),
     validarCampos
 ],httpGastos.postGastos) 

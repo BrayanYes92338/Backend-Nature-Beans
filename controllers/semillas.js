@@ -1,11 +1,9 @@
 import Semilla from "../models/semillas.js";
-import Inventario from "../models/inventarios.js";
-
 const httpSemillas = {
   getSemillas: async (req, res) => {
     const semilla = await Semilla.find()
     .populate({
-      path: 'idProveedor'
+      path: 'idFinca'
   });
     res.json({ semilla });
   },
@@ -33,10 +31,10 @@ const httpSemillas = {
     const semilla = await Semilla.findById(id);
     res.json({ semilla });
   },
-  getProveedores:async (req, res) => { 
-    const { idProveedores } = req.params;
+  getSemillasProveedores:async (req, res) => { 
+    const { idFinca } = req.params;
     try {
-      const semilla = await Semilla.find(idProveedores).populate("idProveedor")
+      const semilla = await Semilla.find(idFinca).populate("idProveedor")
 
       res.json({semilla});
     } catch (error) {
@@ -48,13 +46,10 @@ const httpSemillas = {
   },
   postSemilla: async (req, res) => {
     try {
-      const {idProveedor,numFactura,fechaCompra,fechaVencimiento,especie,variedad,NumLote,origen,poderGerminativo,total} = req.body;
-      const semilla = new Semilla({idProveedor,numFactura,fechaCompra,fechaVencimiento,especie,variedad,NumLote,origen,poderGerminativo,total});
+      const {idFinca,registro_ICA,registro_Invima,fechaVencimiento,especie,numLote,origen,poderGerminativo} = req.body;
+      const semilla = new Semilla({idFinca,registro_ICA,registro_Invima,fechaVencimiento,especie,numLote,origen,poderGerminativo});
 
-      await semilla.save();
-
-      const invent = new Inventario({idSemilla: semilla._id, total: semilla.total})
-      await invent.save() 
+      await semilla.save(); 
       res.json({ semilla });
     } catch (error) {
       console.log(error);
@@ -63,10 +58,10 @@ const httpSemillas = {
   },
   putSemilla: async (req, res) => {
     const { id } = req.params;
-    const { idProveedor, ...resto } = req.body;
+    const { idFinca, ...resto } = req.body;
     const semilla = await Semilla.findByIdAndUpdate(
       id,
-      { idProveedor, ...resto },
+      { idFinca, ...resto },
       { new: true }
     );
     res.json({ semilla });

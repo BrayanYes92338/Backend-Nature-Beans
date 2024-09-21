@@ -1,5 +1,4 @@
 import MaquinariaHerramientas from "../models/maquinariaHerramientas.js";
-import Inventario from "../models/inventarios.js";
 
 
 const httpmaquinariaHerramientas = {
@@ -63,15 +62,12 @@ const httpmaquinariaHerramientas = {
           },
     postMaquinariaHerramientas: async (req, res)=>{
         try{
-            const {idProveedor,nombre,tipo,observaciones,cantidad,precio} = req.body;
+            const {idProveedor,nombre,tipo,observaciones,cantidad,precio,mantenimiento} = req.body;
 
            const totl = cantidad * precio
 
-            const maquinas = new MaquinariaHerramientas({idProveedor,nombre,tipo,observaciones,cantidad,precio,total: totl})
-            await maquinas.save()            
-
-            const invent = new Inventario({idMaquinaria: maquinas._id, total: maquinas.total})
-            await invent.save()            
+            const maquinas = new MaquinariaHerramientas({idProveedor,nombre,tipo,observaciones,cantidad,precio,mantenimiento,total: totl})
+            await maquinas.save()                       
 
             res.json({maquinas})
             

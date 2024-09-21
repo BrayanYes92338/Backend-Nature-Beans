@@ -59,8 +59,8 @@ const httpFertilizacion ={
 
     postFertilizacion: async (req, res)=>{
         try{
-            const {idCultivo,idEmpleado,idInventario,estadoFenologico,tipo,nombreFertilizante,cantidad} = req.body;
-            const fert = new Fertilizacion({idCultivo,idEmpleado,idInventario,estadoFenologico,tipo,nombreFertilizante,cantidad})
+            const {idCultivo,idEmpleado,idInsumo,estadoFenologico,tipo,nombreFertilizante,cantidad} = req.body;
+            const fert = new Fertilizacion({idCultivo,idEmpleado,idInsumo,estadoFenologico,tipo,nombreFertilizante,cantidad})
             await fert.save()
             res.json({fert})
 

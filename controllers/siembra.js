@@ -67,8 +67,8 @@ const httpSiembra = {
         },
     postSiembra: async (req, res)=>{
         try{
-            const {idCultivo,idEmpleados,idInventario,cultivoAnterior,transplante} = req.body;
-            const siem = new Siembra({idCultivo,idEmpleados,idInventario,cultivoAnterior,transplante})
+            const {idCultivo,idEmpleados,idSemilla,cultivoAnterior,transplante} = req.body;
+            const siem = new Siembra({idCultivo,idEmpleados,idSemilla,cultivoAnterior,transplante})
             await siem.save()
             res.json({siem})
 
