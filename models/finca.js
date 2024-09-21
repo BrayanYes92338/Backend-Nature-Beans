@@ -8,6 +8,7 @@ const fincaSchema = new mongoose.Schema({
     ciudad:{type:String,required:true},
     direccion:{type:String,required:true},
     ubicacion:{type:String,required:true},
+    documentos:{type:String,required:true},
     limites:[{
         norte:{type:String,default:""},
         sur:{type:String,default:""},

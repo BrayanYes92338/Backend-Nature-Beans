@@ -1,7 +1,5 @@
 import Gastos from "../models/gastos.js"
-import Insumo from "../models/insumos.js";
-import Semilla from "../models/semillas.js";
-import MaquinariaHerramientas from "../models/maquinariaHerramientas.js";
+
 
 const httpGastos = {
 
@@ -73,17 +71,9 @@ const httpGastos = {
     },
     postGastos: async (req, res)=>{
         try{
-            const {idInsumo,idSemilla,idMantenimiento,nombre,numerofactura,descripcion} = req.body;
-
-            const tins = await Insumo.findById(idInsumo);
-            const tsem = await Semilla.findById(idSemilla);
-            const tman = await MaquinariaHerramientas.findById(idMantenimiento);
-
-            const totl = tins.total + tsem.total + tman.total
-            console.log(totl);
+            const {idFinca,nombre,semillas,insumo,numerofactura,descripcion} = req.body;
             
-
-            const siem = new Gastos({idInsumo,idSemilla,idMantenimiento,nombre,numerofactura,descripcion,total:totl}) 
+            const siem = new Gastos({idFinca,nombre,semillas,insumo,numerofactura,descripcion}) 
             await siem.save()
             res.json({siem})
 
@@ -94,8 +84,8 @@ const httpGastos = {
     },
     putGastos: async (req ,res)=>{
         const {id}=req.params;
-        const {idInsumo,...resto} = req.body;
-        const siem = await Gastos.findByIdAndUpdate(id, {idInsumo, ...resto}, {new:true})
+        const {idFinca,...resto} = req.body;
+        const siem = await Gastos.findByIdAndUpdate(id, {idFinca, ...resto}, {new:true})
         res.json({siem})
     },
 }

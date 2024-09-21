@@ -17,18 +17,18 @@ semilla.get("/listarid/:id", [
 
 semilla.get("/listarProveedores/:id",[
   validarCampos
-],httpSemillas.getProveedores);
+],httpSemillas.getSemillasProveedores);
 
 semilla.get("/activos", [validarCampos], httpSemillas. getSemillaActiva);
 semilla.get("/inactivos", [validarCampos], httpSemillas.geSemillaInactiva);
 
 semilla.post("/agregar",[
-  check('idProveedor', 'Se id Proveedor no puede estar vacio').notEmpty(),
-  check('numFactura', 'numFactura no puede estar vacio').notEmpty(),
+  check('idFinca', 'Se id Finca no puede estar vacio').notEmpty(),
+  check('registro_ICA', 'registro_ICA no puede estar vacio').notEmpty(),
+  check('registro_Invima', 'registro_Invima no puede estar vacio').notEmpty(),
   check('fechaVencimiento', 'fechaVencimiento no puede estar vacio').notEmpty(),
   check('especie', 'especie no puede etar vacio').notEmpty(),
-  check('variedad', 'variedad no puede estar vacio').notEmpty(),
-  check('NumLote', 'NumLote no puede estar vacio').notEmpty(),
+  check('numLote', 'numLote no puede etar vacio').notEmpty(),
   check('origen', 'origen no puede estar vacio').notEmpty(),
   check('poderGerminativo', 'poderGerminativo no puede estar vacio').notEmpty(), 
   validarCampos

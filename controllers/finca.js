@@ -33,8 +33,8 @@ const httpFinca = {
     },
     postFinca: async (req, res) => {
         try {
-            const { idUsuario, nombre, ruc, ciudad, limites, departamento, direccion, ubicacion, area } = req.body;
-            const fincas = new Finca({ idUsuario, nombre, ruc, ciudad, limites, departamento, direccion, ubicacion, area })
+            const { idUsuario, nombre, ruc, departamento, ciudad, direccion, ubicacion, documentos, limites, area } = req.body;
+            const fincas = new Finca({ idUsuario, nombre, ruc, departamento, ciudad, direccion, ubicacion, documentos, limites, area })
             await fincas.save()
             res.json({ fincas })
 
