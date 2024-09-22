@@ -40,11 +40,9 @@ const httpInsumos = {
 
   putInsumos: async (req, res)=>{
     const { id } = req.params;
-    const {IdProveedor,unidad,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones} = req.body;
-
+    const {idFinca,nombre,relacionNPK,registro_ICA,registro_Invima,cantidad,precio,observaciones,unidad} = req.body;
     const totl = cantidad*precio
-
-    const insumos = await Insumo.findByIdAndUpdate(id, {IdProveedor,unidad,idReponsable,nombre,fecha,relacionNPK,cantidad,precio,observaciones,total:totl}, {new: true} )
+    const insumos = await Insumo.findByIdAndUpdate(id, {idFinca,nombre,relacionNPK,registro_ICA,registro_Invima,cantidad,precio,observaciones,unidad,total:totl}, {new: true} )
     res.json({insumos})
   }
 }
