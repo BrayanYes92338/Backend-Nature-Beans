@@ -14,14 +14,13 @@ const maquinariaSchema=new mongoose.Schema({
         observacionesMantenimiento:{type:String,required:true},
         precioMantenimiento:{type:Number,required:true},
     }],
-    desinfeccion:[{
-        fechaDesifeccion:{type:Date, default:Date.now},
-        idEmpleado:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"Proveedor"},
-        productos:[{
-            idInsumo:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"Insumo"},
-        }],
+    desinfeccion: [{
+        fechaDesifeccion: { type: Date, default: Date.now },
+        idEmpleado: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Proveedor" },
+        idInsumo: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Insumo" },
+
     }],
-    fechaCompra:{type:Date, default:Date.now}
+    fechaCompra: { type: Date, default: Date.now }
 })
 
-export default mongoose.model("Maquinaria",maquinariaSchema)
+export default mongoose.model("Maquinaria", maquinariaSchema)

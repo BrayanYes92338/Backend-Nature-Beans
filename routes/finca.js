@@ -28,7 +28,6 @@ router.post('/agregar', [
     check('direccion', 'La direccion no puede estar vacio').notEmpty(),
     check('ubicacion', 'La ubicacion no puede estar vacio').notEmpty(),
     check('documentos', 'Los documentos no puede estar vacio').notEmpty(),
-    check('limites', 'Los limites no puede estar vacio').notEmpty(),
     check('area', 'El area no puede estar vacio').notEmpty(),
     validarCampos
 ], httpFinca.postFinca)
