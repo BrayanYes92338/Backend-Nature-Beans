@@ -80,8 +80,11 @@ const httpmaquinariaHerramientas = {
     },
     putMaquinariaHerramientas: async (req ,res)=>{
         const {id}=req.params;
-        const {idProveedor,...resto} = req.body;
-        const maquinas = await MaquinariaHerramientas.findByIdAndUpdate(id, {idProveedor, ...resto}, {new:true})
+        const {idProveedor,nombre,tipo,observaciones,cantidad,precio,mantenimiento} = req.body;
+
+        const totl = cantidad * precio
+
+        const maquinas = await MaquinariaHerramientas.findByIdAndUpdate(id, {idProveedor,nombre,tipo,observaciones,cantidad,precio,mantenimiento,total: totl}, {new:true})
         res.json({maquinas})
     },
 }

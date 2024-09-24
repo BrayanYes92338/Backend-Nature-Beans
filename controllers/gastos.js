@@ -1,4 +1,6 @@
 import Gastos from "../models/gastos.js"
+import Insumo from "../models/insumos.js";
+
 
 
 const httpGastos = {
@@ -73,13 +75,36 @@ const httpGastos = {
         try{
             const {idFinca,nombre,semillas,insumo,numerofactura,descripcion} = req.body;
             
+
+            for (const o of semillas) {
+                
+                let dataSemilla = parseInt(o.cantidad) * parseInt(o.precio)
+
+                o.total = dataSemilla
+            }
+
+            
+
+
+            for (const e of insumo) {
+
+                if(e.idInsumo){
+                    const dataInsumo = await  Insumo.findById(e.idInsumo)
+    
+                    e.unidad = dataInsumo.unidad
+                    e.cantidad = dataInsumo.cantidad
+                    e.total = dataInsumo.total
+                }
+
+            }
+
             const siem = new Gastos({idFinca,nombre,semillas,insumo,numerofactura,descripcion}) 
             await siem.save()
             res.json({siem})
 
         }catch(error){
             console.log(error)
-            res.status(400).json({msg: 'Error no se pudo agregar la Gastos'})
+            res.status(400).json({msg: 'Error no se pudo agregar los Gastos'})
         }
     },
     putGastos: async (req ,res)=>{

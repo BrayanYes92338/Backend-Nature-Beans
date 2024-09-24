@@ -11,7 +11,7 @@ const maquinariaSchema=new mongoose.Schema({
     mantenimiento:[{
         fechaMantenimiento:{type:Date, default:Date.now},
         responsable:{type:String,required:true},
-        observaciones:{type:String,required:true},
+        observacionesMantenimiento:{type:String,required:true},
         precioMantenimiento:{type:Number,required:true},
     }],
     desinfeccion:[{
