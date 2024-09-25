@@ -8,11 +8,17 @@ const router = Router()
 
 
 router.get('/listar',[],httpFactura.getFactura)
+
 router.get('/listarID/:id',[
     check('id', 'Se necesita un mongoID que sea valido').isMongoId(),
     check('id').custom(helperFactura.validarFacturaID),
     validarCampos
 ],httpFactura.getFacturaID)
+
+router.get('/listar/fechas',[],httpFactura.getFacturaFechas)
+
+router.get("/listar/total",[],httpFactura.getFacturaValor)
+
 
 
 router.post('/agregar',[
@@ -22,7 +28,6 @@ router.post('/agregar',[
     check('precio', 'precio no puede estar vacio').notEmpty(),
     check('cantidad', 'cantidad no puede estar vacio').notEmpty(),
     check('iva', 'iva no puede estar vacio').notEmpty(),
-    check('subtotal', 'subtotal no puede estar vacio').notEmpty(),
     validarCampos
 ],httpFactura.postFactura)
 

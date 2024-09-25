@@ -5,8 +5,9 @@ const ProcesoSchema = new mongoose.Schema({
     idEmpleado:{type:mongoose.Schema.Types.ObjectId,ref:'Empleado',required: true },
     tipo:{type: String,required:true},
     descripcion:{type: String,required:true},
-    fechaInicio:{type:Date, default:Date.now},
-    fechaFinal:{type:Date, default:Date}
+    fechaInicio:{type:Date, default:Date},
+    fechaFinal:{type:Date, default:Date},
+    fecha:{type:Date, default:Date.now}
 })
 
 export default mongoose.model("Proceso", ProcesoSchema)

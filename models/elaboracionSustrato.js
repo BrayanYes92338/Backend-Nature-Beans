@@ -12,5 +12,5 @@ const SustratoSchema = new mongoose.Schema({
 })
 
 
-export default mongoose.model("Sustrato", SustratoSchema)
+export default mongoose.model("Sustrato", SustratoSchema) 
 

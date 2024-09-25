@@ -28,7 +28,44 @@ const httpClima = {
         const climaInactivo = await Clima.find({ estado: 0 })
         res.json({ climaInactivo })
     },
+    getClimaTipo: async (req,res) => {
+        try {
+            const { tipoClima } = req.params;
+            const ti = await Clima.find({tipoClima})
+            res.json(ti)
+        } catch (error) {
+            res.status(500).json({ mensaje: 'No se encontro el tipo de clima' });
+        }
+    },
+    getClimaFechas: async (req,res) => {
 
+        const { fechaInicio, fechaFin } = req.body;
+       
+        if (!fechaInicio || !fechaFin) {
+            return res.status(400).json({ mensaje: 'Por favor proporciona las fechas de inicio y fin' });
+        }
+       
+        try {
+            const documentos = await Clima.find({
+                fecha: {
+                    $gte: new Date(fechaInicio),
+                    $lte: new Date(fechaFin)
+                }
+            })
+            
+       
+            if(documentos.length === 0) {
+                res.json({ message: "No se encontro ningun clima entre esas fechas"})
+            }else{
+       
+            res.json({msg:`Se encontro entre las fechas ${fechaInicio} y ${fechaFin} los siguientes climas`, data: documentos});
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+        }
+       
+        },
     postClima: async (req, res) => {
         try {
             const { idFinca, idEmpleado, tipoClima, horaInicio, horaFinal, tempMin, tempMax } = req.body;

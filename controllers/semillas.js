@@ -1,9 +1,29 @@
 import Semilla from "../models/semillas.js";
-
 const httpSemillas = {
   getSemillas: async (req, res) => {
-    const semilla = await Semilla.find();
+    const semilla = await Semilla.find()
+    .populate({
+      path: 'idFinca'
+  });
     res.json({ semilla });
+  },
+  
+  getSemillaActiva: async (req, res) => {
+    try {
+      const semillaActiva = await Semilla.find({ estado: 1 });
+      res.json({ semilla: semillaActiva });
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener semilla activa' });
+    }
+  },
+  geSemillaInactiva: async (req, res) => {
+    try {
+      const semillaInactiva = await Semilla.find({ estado: 0 });
+      res.json({ semilla: semillaInactiva });
+
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener semilla inactiva' });
+    }
   },
 
   getSemillaID: async (req, res) => {
@@ -11,12 +31,12 @@ const httpSemillas = {
     const semilla = await Semilla.findById(id);
     res.json({ semilla });
   },
-  getProveedores:async (req, res) => {
-    const { idProveedores } = req.params;
+  getSemillasProveedores:async (req, res) => { 
+    const { idFinca } = req.params;
     try {
-      const semillas = await Semilla.find(idProveedores).populate("idProveedor")
+      const semilla = await Semilla.find(idFinca).populate("idProveedor")
 
-      res.json({semillas});
+      res.json({semilla});
     } catch (error) {
       console.error("Error al obtener las semillas por responsable:", error);
       res
@@ -26,63 +46,27 @@ const httpSemillas = {
   },
   postSemilla: async (req, res) => {
     try {
-      const {
-        idProveedor,
-        numFactura,
-        fechaCompra,
-        fechaVencimiento,
-        especie,
-        variedad,
-        NumLote,
-        origen,
-        poderGerminativo,
-      } = req.body;
-      const semilla = new Semilla({
-        idProveedor,
-        numFactura,
-        fechaCompra,
-        fechaVencimiento,
-        especie,
-        variedad,
-        NumLote,
-        origen,
-        poderGerminativo,
-      });
-      await semilla.save();
+      const {idFinca,registro_ICA,registro_Invima,fechaVencimiento,especie,numLote,origen,poderGerminativo} = req.body;
+      const semilla = new Semilla({idFinca,registro_ICA,registro_Invima,fechaVencimiento,especie,numLote,origen,poderGerminativo});
+
+      await semilla.save(); 
       res.json({ semilla });
     } catch (error) {
       console.log(error);
-      res
-        .status(400)
-        .json({ msg: "Error no se pudo crear el registro de Semillas" });
+      res.status(400).json({ msg: "Error no se pudo crear el registro de Semillas" });
     }
   },
   putSemilla: async (req, res) => {
     const { id } = req.params;
-    const { idProveedor, ...resto } = req.body;
+    const { idFinca, ...resto } = req.body;
     const semilla = await Semilla.findByIdAndUpdate(
       id,
-      { idProveedor, ...resto },
+      { idFinca, ...resto },
       { new: true }
     );
     res.json({ semilla });
   },
-  getSemillaActivo: async (req, res) => {
-    try {
-      const semillaActivos = await Semilla.find({ estado:1});
-      res.json({ semilla: semillaActivos });
-    } catch (error) {
-      res.status(500).json({ error: "Error al obtener semillas activos" });
-    }
-  },
-  getSemillaInactivo: async (req, res) => {
-    try {
-      const semillaInactivos = await Semilla.find({estado:0});
-      res.json({ semilla: semillaInactivos });
-    } catch (error) {
-      res.status(500).json({ error: "Error al obtener semillas inactivos" });
-    }
-  },
+ 
   putSemillaActiva: async (req, res) => {
     const { id } = req.params;
     const semilla = await Semilla.findByIdAndUpdate(

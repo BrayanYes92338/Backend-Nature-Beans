@@ -8,11 +8,15 @@ const analisis = Router();
 
 analisis.get("/listar", [validarCampos], httpAnalisisSuelo.getAnalisis);
 analisis.get("/listarid/:id", [validarCampos], httpAnalisisSuelo.getAnalisisId);
-analisis.get(
-  "/listarResponsable/:id",
+
+analisis.get("/listarResponsable/:id",
   [validarCampos],
   httpAnalisisSuelo.getResponsables
 );
+
+analisis.get("/listar/fechas",
+  [validarCampos],
+  httpAnalisisSuelo.getAnalisisFechas);
 
 analisis.post(
   "/agregar",
@@ -38,5 +42,4 @@ analisis.put(
   ],
   httpAnalisisSuelo.putAnalisis
 );
-analisis.get("/fechas", httpAnalisisSuelo.getAnalisisEntreFechas);
 export default analisis;

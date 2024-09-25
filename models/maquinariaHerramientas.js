@@ -5,10 +5,22 @@ const maquinariaSchema=new mongoose.Schema({
     nombre:{type:String,required:true},
     tipo:{type:String,required:true},
     observaciones:{type:String,required:true},
-    cantidad:{type:String,required:true},
+    cantidad:{type:Number,required:true},
     precio:{type:Number,required:true},
     total:{type:Number,default:0},
-    fechaCompra:{type:Date, default:Date.now}
+    mantenimiento:[{
+        fechaMantenimiento:{type:Date, default:Date.now},
+        responsable:{type:String,required:true},
+        observacionesMantenimiento:{type:String,required:true},
+        precioMantenimiento:{type:Number,required:true},
+    }],
+    desinfeccion: [{
+        fechaDesifeccion: { type: Date, default: Date.now },
+        idEmpleado: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Proveedor" },
+        idInsumo: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Insumo" },
+
+    }],
+    fechaCompra: { type: Date, default: Date.now }
 })
 
-export default mongoose.model("Maquinaria",maquinariaSchema)
+export default mongoose.model("Maquinaria", maquinariaSchema)

@@ -31,6 +31,18 @@ router.get('/listar',[
         validarCampos
     ], httpNomina.getNominaInactiva)
 
+    router.get('/valorTotal', [
+        validarCampos
+    ], httpNomina.getNominaValor)
+
+    router.get('/listar/empleado/:id', [
+        validarCampos
+    ], httpNomina.getNominaEmpleado)
+
+    router.get('/listar/fechas', [
+        validarCampos
+    ], httpNomina.getNominaFechas)
+
     router.post('/agregar', [
         validarJWT,
         validarRol(["ADMIN", "GESTOR"]),

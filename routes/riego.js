@@ -8,13 +8,24 @@ import helperRiego from '../helpers/riego.js'
 
 const router = Router()
 
-router.get('/listar',[
-    validarCampos], httpRiego.getRiego)
+router.get('/listar',[validarCampos], httpRiego.getRiego)
 
-    router.get('/listar/:id', [
-        validarCampos
-    ], httpRiego.getRiegoID);
+
+
+router.get('/listar/empleado/:id',[validarCampos], httpRiego.getRiegoEmpleado)
+
+router.get('/listar/cultivo/:id',[validarCampos], httpRiego.getRiegoCultivo)
     
+router.get('/listar/fechas',[validarCampos], httpRiego.getRiegoFechas) 
+
+router.get('/listar/cantAgua/:cantidadAgua',[validarCampos], httpRiego.getRiegoCantAgua) 
+
+
+router.get('/listar/:id', [
+    validarCampos
+], httpRiego.getRiegoID);
+
+
 router.post('/agregar', [
     check('idCultivo', 'el ID del cultivo no puede estar vacio').notEmpty(),
     check('idEmpleado', 'El ID del empleado no puede estar vacio').notEmpty(),

@@ -10,6 +10,18 @@ const httpParcelas = {
     .populate({path:'asistenteTecnico'})
     res.json({ parcela })
   },
+
+  getParcelaAsistente: async (req,res) => {
+    try {
+        const { id } = req.params;
+        const asistente = await Parcela.find({asistenteTecnico: id})
+        .populate({path:"asistenteTecnico"})
+        res.json(asistente)
+    } catch (error) {
+        res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
+    }
+},
+
   getParcelaActivas: async (req, res)=>{
      const parcelas = await Parcela.find({estado:1})
      .populate({path:'idFinca'})
@@ -22,6 +34,7 @@ const httpParcelas = {
     .populate({path:'asistenteTecnico'})
     res.json({parcelas})
   },
+
 
   postParcela: async (req, res) => {
     try {

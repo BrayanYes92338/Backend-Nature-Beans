@@ -11,8 +11,10 @@ const compradorSchema=new mongoose.Schema({
     direccion:{type:String,required:true},
     cantidad:{type:Number,required:true},
     nguiaTransporte:{type:String,required:true, unique:true},
+    fecha:{type:Date,default:Date.now},
     valor:{type:Number,required:true},
     estado:{type:Number,default:1},
+
 })
 
 export default mongoose.model("Comprador",compradorSchema)

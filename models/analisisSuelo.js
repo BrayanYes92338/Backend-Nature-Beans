@@ -7,7 +7,7 @@ const analisisSueloSchema=new mongoose.Schema({
     laboratorio:{type:String,requerid:true},
     resultados:[{}],
     recomendaciones:{type:String},
-    createdAt:{type:Date,default:Date.now},
+    fecha:{type:Date,default:Date.now},
 })
 
 export default mongoose.model("AnalisisSuelo",analisisSueloSchema)         

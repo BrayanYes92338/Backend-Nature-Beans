@@ -1,4 +1,5 @@
-import Insumo from "../models/insumos.js"
+import Insumo from "../models/insumos.js";
+
 
 const httpInsumos = {
 
@@ -8,44 +9,42 @@ const httpInsumos = {
       $or: [{ nombre: new RegExp(buscar, "i")}]
     })
     .populate({
-      path: 'IdProveedor'
+      path: 'idFinca'
   })
-  .populate({
-      path: 'idReponsable'
-  });
     res.json ({insumo})
   },
   
   postInsumos: async (req, res) => {
     try {
-      const { IdProveedor, idReponsable, nombre, relacionNPK, cantidad, unidad, observaciones, total } = req.body;
-  
-      // Validar la relación NPK
-      const regex = /^(\d+\s+){2}\d+$/;
-      if (!regex.test(relacionNPK)) {
-        return res.status(400).json({ msg: 'La relación NPK debe contener exactamente tres números separados por espacios' });
-      }
-  
-      const formattedRelacionNPK = relacionNPK.split(' ').join('-');
-  
-      const insumos = new Insumo({IdProveedor, idReponsable,nombre, relacionNPK: formattedRelacionNPK,cantidad,unidad,observaciones,  total });
-  
-      await insumos.save();
-      res.json({ insumos });
+
+      const  {idFinca,nombre,relacionNPK,registro_ICA,registro_Invima,cantidad,precio,observaciones,unidad} = req.body;
+
+      const totl = cantidad*precio
+
+      const insumo = new Insumo({idFinca,nombre,relacionNPK,registro_ICA,registro_Invima,cantidad,precio,observaciones,unidad,total:totl})
+      await insumo.save()         
+      res.json({ insumo })
     } catch (error) {
       console.log(error);
-      res.status(400).json({ msg: "Error no se pudo crear el registro de Insumos" });
+      res.status(400).json({ msg: "Error no se pudo crear el registro de Insumos" }); 
     }
   },
-  
+
+  // putInsumos: async (req, res)=>{
+  //   const { id } = req.params;
+  //   const {IdProveedor,...resto} = req.body;
+  //   const insumos = await Insumo.findByIdAndUpdate(id, {IdProveedor,...resto}, {new: true} )
+  //   res.json({insumos})
+  // }
+
 
   putInsumos: async (req, res)=>{
     const { id } = req.params;
-    const {IdProveedor,...resto} = req.body;
-    const insumos = await Insumo.findByIdAndUpdate(id, {IdProveedor,...resto}, {new: true} )
+    const {idFinca,nombre,relacionNPK,registro_ICA,registro_Invima,cantidad,precio,observaciones,unidad} = req.body;
+    const totl = cantidad*precio
+    const insumos = await Insumo.findByIdAndUpdate(id, {idFinca,nombre,relacionNPK,registro_ICA,registro_Invima,cantidad,precio,observaciones,unidad,total:totl}, {new: true} )
     res.json({insumos})
   }
-
 }
 
 export default httpInsumos

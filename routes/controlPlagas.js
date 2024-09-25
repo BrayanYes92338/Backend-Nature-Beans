@@ -10,10 +10,15 @@ const router = Router()
 
 router.get('/listar',[
     validarCampos], httpControlPlaga.getControlPlaga)
+    
+router.get('/listar/tipo/:tipo',[
+    validarCampos], httpControlPlaga.getControlPlagaTipo)
 
-    router.get('/listar/:id', [
-        validarCampos
-    ], httpControlPlaga.getControlPlagaID);
+router.get('/listar/fechas',[
+    validarCampos], httpControlPlaga.getControlPlagaFechas)
+
+router.get('/listar/operario/:id',[
+    validarCampos], httpControlPlaga.getControlPlagaOperario)           
 
 router.post('/agregar', [
     check('idCultivo', 'El ID del  Cultivo no puede estar vacio').notEmpty(),
