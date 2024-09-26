@@ -7,7 +7,7 @@ const fertilizacionSchema = new mongoose.Schema({
     estadoFenologico:{type:String,required:true},
     tipo:{type:String,required:true},
     nombreFertilizante:{type:String,required:true},
-    cantidad:{type:Number,required:true}, 
+    cantidad:{type:String,required:true}, 
     fecha:{type:Date,default:Date.now}
 })
 

@@ -9,6 +9,12 @@ const httpFertilizacion ={
         })
         .populate({
             path:'idCultivo'
+        })
+        .populate({
+            path:"idEmpleado"
+        })
+        .populate({
+            path:'idInsumo'
         });
         res.json({fert})
     },

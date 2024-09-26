@@ -34,7 +34,7 @@ const httpSemillas = {
   getSemillasProveedores:async (req, res) => { 
     const { idFinca } = req.params;
     try {
-      const semilla = await Semilla.find(idFinca).populate("idProveedor")
+      const semilla = await Semilla.find(idFinca).populate("idFinca")
 
       res.json({semilla});
     } catch (error) {
