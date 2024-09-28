@@ -3,29 +3,29 @@ import MaquinariaHerramientas from "../models/maquinariaHerramientas.js";
 
 const httpmaquinariaHerramientas = {
 
-    getMaquinariaHerramientas: async(req, res)=>{
-        const {buscar} = req.query;
+    getMaquinariaHerramientas: async (req, res) => {
+        const { buscar } = req.query;
         const maquinas = await MaquinariaHerramientas.find({
-            $or:[{tipo: new RegExp(buscar, "i")}]
+            $or: [{ tipo: new RegExp(buscar, "i") }]
         })
-        .populate({
-            path: 'idProveedor'
-        });
-        res.json({maquinas})
+            .populate({
+                path: 'idProveedor'
+            });
+        res.json({ maquinas })
     },
-    getMaquinariaHerramientasID: async (req ,res)=>{
-        const {id}= req.params;
+    getMaquinariaHerramientasID: async (req, res) => {
+        const { id } = req.params;
         const finca = await MaquinariaHerramientas.findById(id);
-        res.json({finca})
+        res.json({ finca })
     },
-    getMaquinariaHerramientasFechas: async (req,res) => {
+    getMaquinariaHerramientasFechas: async (req, res) => {
 
         const { fechaInicio, fechaFin } = req.body;
-       
+
         if (!fechaInicio || !fechaFin) {
             return res.status(400).json({ mensaje: 'Por favor proporciona las fechas de inicio y fin' });
         }
-       
+
         try {
             const documentos = await MaquinariaHerramientas.find({
                 fechaCompra: {
@@ -33,60 +33,71 @@ const httpmaquinariaHerramientas = {
                     $lte: new Date(fechaFin)
                 }
             })
-            
-       
-            if(documentos.length === 0) {
-                res.json({ message: "No se compro ninguna Maquina o Herramienta entre esas fechas"})
-            }else{
-       
-            res.json({msg:`Se compraron entre las fechas ${fechaInicio} y ${fechaFin} las siguientes Maquinas o Herramientas`, data: documentos});
+
+
+            if (documentos.length === 0) {
+                res.json({ message: "No se compro ninguna Maquina o Herramienta entre esas fechas" })
+            } else {
+
+                res.json({ msg: `Se compraron entre las fechas ${fechaInicio} y ${fechaFin} las siguientes Maquinas o Herramientas`, data: documentos });
             }
         } catch (error) {
             console.error(error);
             res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
         }
-       
-        },
-        getMaquinariaHerramientasCantidad: async (req, res) => {
 
-            let acum = 0
-        
-            const maquinas = await MaquinariaHerramientas.find();
-        
-            for (let i = 0; i < maquinas.length; i++) {
-              const element = maquinas[i];
-              acum = acum + element.cantidad
-            }
-        
-            res.json({msg:`El total de maquinas y herramientas compradas son ${acum}`, data: maquinas});
-          },
-    postMaquinariaHerramientas: async (req, res)=>{
-        try{
-            const {idProveedor,nombre,tipo,observaciones,cantidad,precio,mantenimiento} = req.body;
+    },
+    getMaquinariaHerramientasCantidad: async (req, res) => {
 
-           const totl = cantidad * precio
+        let acum = 0
 
-            const maquinas = new MaquinariaHerramientas({idProveedor,nombre,tipo,observaciones,cantidad,precio,mantenimiento,total: totl})
-            await maquinas.save()                       
+        const maquinas = await MaquinariaHerramientas.find();
 
-            res.json({maquinas})
-            
+        for (let i = 0; i < maquinas.length; i++) {
+            const element = maquinas[i];
+            acum = acum + element.cantidad
+        }
+
+        res.json({ msg: `El total de maquinas y herramientas compradas son ${acum}`, data: maquinas });
+    },
+    postMaquinariaHerramientas: async (req, res) => {
+        try {
+            const { idProveedor, nombre, tipo, observaciones, cantidad, precio, mantenimiento, desinfeccion } = req.body;
+
+            const totl = cantidad * precio
+
+            const maquinas = new MaquinariaHerramientas({ idProveedor, nombre, tipo, observaciones, cantidad, precio, mantenimiento,desinfeccion, total: totl })
+            await maquinas.save()
+
+            res.json({ maquinas })
 
 
-        }catch(error){
+
+        } catch (error) {
             console.log(error)
-            res.status(400).json({msg: 'Error no se pudo agregar la maquinaria o herramienta'})
+            res.status(400).json({ msg: 'Error no se pudo agregar la maquinaria o herramienta' })
         }
     },
-    putMaquinariaHerramientas: async (req ,res)=>{
-        const {id}=req.params;
-        const {idProveedor,nombre,tipo,observaciones,cantidad,precio,mantenimiento} = req.body;
-
-        const totl = cantidad * precio
-
-        const maquinas = await MaquinariaHerramientas.findByIdAndUpdate(id, {idProveedor,nombre,tipo,observaciones,cantidad,precio,mantenimiento,total: totl}, {new:true})
-        res.json({maquinas})
+    putMaquinariaHerramientas: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { cantidad, precio, idProveedor, ...resto } = req.body;
+    
+            // Calcular el nuevo total
+            const total = cantidad && precio ? cantidad * precio : undefined;
+    
+            // Si hay un nuevo total, añadirlo al objeto de actualización
+            const updateData = total ? { ...resto, cantidad, precio, total } : { ...resto, cantidad, precio };
+    
+            // Actualizar la maquinaria
+            const maquinas = await MaquinariaHerramientas.findByIdAndUpdate(id, updateData, { new: true });
+            res.json({ maquinas });
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({ msg: 'Error al actualizar la maquinaria o herramienta' });
+        }
     },
+    
 }
 
 export default httpmaquinariaHerramientas;
