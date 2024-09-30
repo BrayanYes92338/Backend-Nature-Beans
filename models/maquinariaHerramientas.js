@@ -16,7 +16,7 @@ const maquinariaSchema = new mongoose.Schema({
     }],
     desinfeccion: [{
         fechaDesifeccion: { type: Date, default: Date.now },
-        idEmpleado: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Proveedor" },
+        idEmpleado: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Empleado" },
         idInsumo: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Insumo" },
     }],
     fechaCompra: { type: Date, default: Date.now }

@@ -10,6 +10,25 @@ const httpGastos = {
         const siem = await Gastos.find({
             $or:[{numerofactura: new RegExp(buscar, "i")}]
         })
+        .populate({
+            path: 'idFinca'  
+        })
+        .populate({
+            path: 'semillas.idSemilla',  
+           
+        })
+        .populate({
+            path: 'semillas.idProveedor', 
+           
+        })
+        .populate({
+            path: 'insumo.idInsumo', 
+           
+        })
+        .populate({
+            path: 'insumo.idProveedor', 
+           
+        })
         res.json({siem})
     },
     getGastosID: async (req ,res)=>{

@@ -4,14 +4,27 @@ import MaquinariaHerramientas from "../models/maquinariaHerramientas.js";
 const httpmaquinariaHerramientas = {
 
     getMaquinariaHerramientas: async (req, res) => {
-        const { buscar } = req.query;
-        const maquinas = await MaquinariaHerramientas.find({
-            $or: [{ tipo: new RegExp(buscar, "i") }]
-        })
+        try {
+            const { buscar } = req.query;
+            const maquinas = await MaquinariaHerramientas.find({
+                $or: [{ tipo: new RegExp(buscar, "i") }]
+            })
             .populate({
-                path: 'idProveedor'
+                path: 'idProveedor'  // Popula el proveedor
+            })
+            .populate({
+                path: 'desinfeccion.idEmpleado',  // Popula el empleado en desinfección
+               
+            })
+            .populate({
+                path: 'desinfeccion.idInsumo',  // Popula el insumo en desinfección
+                
             });
-        res.json({ maquinas })
+    
+            res.json({ maquinas });
+        } catch (error) {
+            res.status(500).json({ error: 'Error al obtener maquinaria y herramientas' });
+        }
     },
     getMaquinariaHerramientasID: async (req, res) => {
         const { id } = req.params;
@@ -66,7 +79,7 @@ const httpmaquinariaHerramientas = {
 
             const totl = cantidad * precio
 
-            const maquinas = new MaquinariaHerramientas({ idProveedor, nombre, tipo, observaciones, cantidad, precio, mantenimiento,desinfeccion, total: totl })
+            const maquinas = new MaquinariaHerramientas({ idProveedor, nombre, tipo, observaciones, cantidad, precio, mantenimiento, desinfeccion, total: totl })
             await maquinas.save()
 
             res.json({ maquinas })
@@ -82,13 +95,13 @@ const httpmaquinariaHerramientas = {
         try {
             const { id } = req.params;
             const { cantidad, precio, idProveedor, ...resto } = req.body;
-    
+
             // Calcular el nuevo total
             const total = cantidad && precio ? cantidad * precio : undefined;
-    
+
             // Si hay un nuevo total, añadirlo al objeto de actualización
             const updateData = total ? { ...resto, cantidad, precio, total } : { ...resto, cantidad, precio };
-    
+
             // Actualizar la maquinaria
             const maquinas = await MaquinariaHerramientas.findByIdAndUpdate(id, updateData, { new: true });
             res.json({ maquinas });
@@ -97,7 +110,7 @@ const httpmaquinariaHerramientas = {
             res.status(400).json({ msg: 'Error al actualizar la maquinaria o herramienta' });
         }
     },
-    
+
 }
 
 export default httpmaquinariaHerramientas;

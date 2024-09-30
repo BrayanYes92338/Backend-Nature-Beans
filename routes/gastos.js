@@ -20,8 +20,8 @@ router.get("/listar/total",[],httpGastos.getGastosTotal)
 router.post("/agregar",[
     check("idFinca", "El idFinca no puede estar vacio").notEmpty(),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
-    check("semillas", "El semillas no puede estar vacio").notEmpty(),
-    check("insumo", "El insumo no puede estar vacio").notEmpty(),
+    // check("semillas", "El semillas no puede estar vacio").notEmpty(),
+    // check("insumo", "El insumo no puede estar vacio").notEmpty(),
     check("numerofactura", "El numerofactura no puede estar vacio").notEmpty(),
     check("descripcion", "El descripcion no puede estar vacio").notEmpty(),
     validarCampos
