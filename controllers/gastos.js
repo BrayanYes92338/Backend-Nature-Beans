@@ -97,9 +97,9 @@ const httpGastos = {
 
             for (const o of semillas) {
                 
-                let dataSemilla = parseInt(o.cantidad) * parseInt(o.precio)
+                let dataSemilla = parseInt(o.cantidadSemilla) * parseInt(o.precioSemilla)
 
-                o.total = dataSemilla
+                o.totalSemilla = dataSemilla
             }
 
             
@@ -107,12 +107,25 @@ const httpGastos = {
 
             for (const e of insumo) {
 
+                let stock = 0
+
                 if(e.idInsumo){
                     const dataInsumo = await  Insumo.findById(e.idInsumo)
     
-                    e.unidad = dataInsumo.unidad
-                    e.cantidad = dataInsumo.cantidad
-                    e.total = dataInsumo.total
+                    e.unidadInsumo = dataInsumo.unidad
+                    e.cantidadInsumo = dataInsumo.cantidad
+                    e.totalInsumo = dataInsumo.total
+
+                    if(dataInsumo.cantidad > 0){
+                        console.log(dataInsumo.cantidad);
+                        
+                     stock = dataInsumo.cantidad - parseInt(e.cantidadInsumo)
+                     console.log(stock);
+                     
+                        dataInsumo.cantidad = stock
+                       await dataInsumo.save()
+                    }
+
                 }
 
             }
