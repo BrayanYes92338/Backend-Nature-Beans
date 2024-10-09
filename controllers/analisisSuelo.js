@@ -62,8 +62,8 @@ const httpAnalisisSuelo = {
   
   postAnalisis: async (req, res) => {
     try {
-      const {idParcela,idEmpleado, muestra,cultivo,laboratorio,resultados,recomendaciones } = req.body;
-      const analisis = new AnalisisSuelo({idParcela,idEmpleado, muestra,cultivo,laboratorio,resultados,recomendaciones});
+      const {idParcela,idEmpleado, muestra,laboratorio,resultados,recomendaciones } = req.body;
+      const analisis = new AnalisisSuelo({idParcela,idEmpleado, muestra,laboratorio,resultados,recomendaciones});
 
       await analisis.save();
       res.json({ analisis });
