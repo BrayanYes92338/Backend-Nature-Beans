@@ -90,53 +90,52 @@ const httpGastos = {
            res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
         }
     },
-    postGastos: async (req, res)=>{
-        try{
-            const {idFinca,nombre,semillas,insumo,numerofactura,descripcion} = req.body;
-            
-
-            for (const o of semillas) {
-                
-                let dataSemilla = parseInt(o.cantidadSemilla) * parseInt(o.precioSemilla)
-
-                o.totalSemilla = dataSemilla
-            }
-
-            
-
-
-            for (const e of insumo) {
-
-                let stock = 0
-
-                if(e.idInsumo){
-                    const dataInsumo = await  Insumo.findById(e.idInsumo)
+    postGastos: async (req, res) => {
+        try {
+            const { idFinca, nombre, semillas = [], insumo = [], numerofactura, descripcion } = req.body;
     
-                    e.unidadInsumo = dataInsumo.unidad
-                    e.cantidadInsumo = dataInsumo.cantidad
-                    e.totalInsumo = dataInsumo.total
-
-                    if(dataInsumo.cantidad > 0){
-                        console.log(dataInsumo.cantidad);
-                        
-                     stock = dataInsumo.cantidad - parseInt(e.cantidadInsumo)
-                     console.log(stock);
-                     
-                        dataInsumo.cantidad = stock
-                       await dataInsumo.save()
-                    }
-
+            // Si hay semillas, iterar sobre ellas para calcular totalSemilla
+            if (Array.isArray(semillas) && semillas.length > 0) {
+                for (const o of semillas) {
+                    let dataSemilla = parseInt(o.cantidadSemilla) * parseInt(o.precioSemilla);
+                    o.totalSemilla = dataSemilla;
                 }
-
             }
-
-            const siem = new Gastos({idFinca,nombre,semillas,insumo,numerofactura,descripcion}) 
-            await siem.save()
-            res.json({siem})
-
-        }catch(error){
-            console.log(error)
-            res.status(400).json({msg: 'Error no se pudo agregar los Gastos'})
+    
+            // Si hay insumos, iterar sobre ellos para actualizar la información
+            if (Array.isArray(insumo) && insumo.length > 0) {
+                for (const e of insumo) {
+                    let stock = 0;
+    
+                    if (e.idInsumo) {
+                        const dataInsumo = await Insumo.findById(e.idInsumo);
+    
+                        // Actualizar correctamente la cantidad y el stock
+                        let cantidadSolicitada = parseInt(e.cantidadInsumo);
+    
+                        if (dataInsumo.cantidad >= cantidadSolicitada) {
+                            stock = dataInsumo.cantidad - cantidadSolicitada; // Restar la cantidad solicitada
+                            dataInsumo.cantidad = stock; // Actualizar el stock en la base de datos
+                            await dataInsumo.save();
+    
+                            // Asegurarse de no sobrescribir e.cantidadInsumo con el stock
+                            e.totalInsumo = cantidadSolicitada * dataInsumo.precio;
+                        } else {
+                            // Si no hay suficiente stock, retornar un error o manejarlo de alguna manera
+                            return res.status(400).json({ msg: `No hay suficiente stock para el insumo ${dataInsumo.nombre}` });
+                        }
+                    }
+                }
+            }
+    
+            // Crear el nuevo gasto
+            const siem = new Gastos({ idFinca, nombre, semillas, insumo, numerofactura, descripcion });
+            await siem.save();
+            res.json({ siem });
+    
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({ msg: 'Error no se pudo agregar los Gastos' });
         }
     },
     putGastos: async (req ,res)=>{
