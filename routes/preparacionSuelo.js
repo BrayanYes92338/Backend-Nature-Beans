@@ -26,7 +26,7 @@ preparacion.post(
   "/agregar",
   [
     check("idParcela", "El ID de la parcela no puede estar vacío").notEmpty(),
-    check("operario", "El ID del operario no puede estar vacío").notEmpty(),
+    check("idEmpleadooperario", "El ID del idEmpleadooperario no puede estar vacío").notEmpty(),
 
     check(
       "productos.*.ingredienteActivo",
@@ -51,7 +51,7 @@ preparacion.put(
 
   [
     check("idParcela", "El ID de la parcela no puede estar vacío").notEmpty(),
-    check("operario", "El ID del operario no puede estar vacío").notEmpty(),
+    check("idEmpleadooperario", "El ID del idEmpleadooperario no puede estar vacío").notEmpty(),
     check(
       "productos.*.ingredienteActivo",
       "El ingrediente activo es requerido"
