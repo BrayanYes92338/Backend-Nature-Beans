@@ -26,7 +26,7 @@ const httpGastos = {
            
         })
         .populate({
-            path: 'insumo.idProveedor', 
+            path: 'insumo.idProveedorInsumo', 
            
         })
         res.json({siem})
