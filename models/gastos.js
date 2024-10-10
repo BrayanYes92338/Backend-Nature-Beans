@@ -23,4 +23,4 @@ const gastosSchema = new mongoose.Schema({
     fecha: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Gasto",gastosSchema) 
+export default mongoose.model("Gasto", gastosSchema);

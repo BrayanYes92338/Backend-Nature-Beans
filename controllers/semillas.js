@@ -8,21 +8,12 @@ const httpSemillas = {
   },
   
   getSemillaActiva: async (req, res) => {
-    try {
-      const semillaActiva = await Semilla.find({ estado: 1 });
-      res.json({ semilla: semillaActiva });
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener semilla activa' });
-    }
+    const semillaActiva = await Semilla.find({ estado: 1 })
+    res.json({semillaActiva})
   },
   geSemillaInactiva: async (req, res) => {
-    try {
-      const semillaInactiva = await Semilla.find({ estado: 0 });
-      res.json({ semilla: semillaInactiva });       
-
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener semilla inactiva' });
-    }
+   const semillaInactiva = await Semilla.find({ estado: 0 })
+   res.json({semillaInactiva})
   },
 
   getSemillaID: async (req, res) => {
