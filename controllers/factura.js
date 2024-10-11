@@ -1,4 +1,5 @@
 import Factura from "../models/factura.js";
+import Produccion from "../models/produccion.js";
 
 const httpFactura ={
 
@@ -8,8 +9,12 @@ const httpFactura ={
             $or:[{nombreProducto: new RegExp(buscar, "i")}]
         })
         .populate({
-            path:'idInventario'
-        });
+            path:'idComprador'
+        })
+        .populate({
+            path: 'detalle.idProduccion',  
+           
+        })
         res.json({fact})
     },
     getFacturaID: async (req ,res)=>{
@@ -61,15 +66,47 @@ const httpFactura ={
           },
     postFactura: async (req, res)=>{
         try{
-            const {idInventario,idComprador,loteComercialnum,nombreProducto,precio,cantidad,iva} = req.body;
+            const {idComprador,loteComercialnum,detalle} = req.body;
 
-            const subtotl = precio * cantidad
+            let totl = 0
 
-            const iv = subtotl*iva/100
 
-            const totl = subtotl+iv
+            for (const a of detalle) {
+
+                let stock = 0
+
+                if (a.idProduccion) {
+                    
+                    const pro = await Produccion.findById(a.idProduccion)
+
+                    if (a.cantidad <= pro.cantidad) {
+                        
+                        a.nombreProducto = pro.producto
+    
+                        let subtotl = a.precio * a.cantidad
+        
+                        a.subtotal = subtotl
             
-            const factura = new Factura({idInventario,idComprador,loteComercialnum,nombreProducto,precio,cantidad,iva,subtotal:subtotl,total:totl})
+                        let iv = subtotl*a.iva/100
+            
+                        totl = subtotl+iv
+
+                        stock = a.cantidad - pro.cantidad
+                        pro.cantidad = stock
+                        await pro.save()
+
+                    }else{
+                        return res.status(400).json({ msg: `No hay suficiente stock para el producto ${pro.producto}` });
+                    }
+
+
+                }
+
+                
+            }
+
+            
+            const factura = new Factura({idComprador,loteComercialnum,total: totl,detalle})
             await factura.save()
             res.json({factura})
 
@@ -80,8 +117,8 @@ const httpFactura ={
     },
     putFactura: async (req ,res)=>{
         const {id}=req.params;
-        const {idInventario,...resto} = req.body;
-        const factura = await Factura.findByIdAndUpdate(id, {idInventario, ...resto}, {new:true})
+        const {idComprador,...resto} = req.body;
+        const factura = await Factura.findByIdAndUpdate(id, {idComprador, ...resto}, {new:true})
         res.json({factura})
     },
 }

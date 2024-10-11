@@ -5,9 +5,9 @@ const PreparacionSueloSchema = new mongoose.Schema({
     idParcela:{type:mongoose.Schema.Types.ObjectId,ref:'Parcela',required:true},
     idEmpleadooperario:{type:mongoose.Schema.Types.ObjectId,ref:'Empleado',required:true},
     productos:[{  
-        ingredienteActivo:{type:String,required:true},
-        dosis:{type:String,required:true},
-        metodoAplicacion:{type:String,required:true},
+        ingredienteActivo:{type:String,default:""},
+        dosis:{type:String,default:""},
+        metodoAplicacion:{type:String,default:""},
     }],
     observaciones:{type:String,required:true},
 })

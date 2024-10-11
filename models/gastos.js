@@ -13,7 +13,7 @@ const gastosSchema = new mongoose.Schema({
     }],
     insumo: [{
         idInsumo: { type: mongoose.Schema.Types.ObjectId, ref: "Insumo" },
-        idProveedor: { type: mongoose.Schema.Types.ObjectId, ref: "Proveedor" },
+        idProveedorInsumo: { type: mongoose.Schema.Types.ObjectId, ref: "Proveedor" },
         unidadInsumo: { type: String, default: 0 },
         cantidadInsumo: { type: Number, default: 0 },
         totalInsumo: { type: Number, default: 0 },
