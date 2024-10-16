@@ -3,8 +3,12 @@ import PreparacionSuelo from "../models/preparacionSuelo.js";
 const httpPreparacionSuelo = {
 
   getPreparacionSuelo: async (req, res) => {
-    const preparacion = await PreparacionSuelo.find();
+    const preparacion = await PreparacionSuelo.find()
+    
+    .populate({path:"idParcela"})
+    .populate({path: 'idEmpleadooperario'})
     res.json({ preparacion });
+    
   },
 
 
@@ -17,13 +21,13 @@ const httpPreparacionSuelo = {
     try {
       const {
         idParcela,
-        operario,
+        idEmpleadooperario,
         productos,
         observaciones
       } = req.body;
       const preparacion = new PreparacionSuelo({
         idParcela,
-        operario,
+        idEmpleadooperario,
         productos,                    
         observaciones
       });
@@ -73,9 +77,9 @@ const httpPreparacionSuelo = {
       }
     },
     getResponsables: async (req, res) => {
-      const { operario } = req.params;
+      const { idEmpleadooperario } = req.params;
       try {
-        const preparacion = await PreparacionSuelo.find( operario ).populate('operario')
+        const preparacion = await PreparacionSuelo.find( idEmpleadooperario ).populate('idEmpleadooperario')
         res.json({ preparacion });
       } catch (error) {
         console.error("Error al obtener los análisis por responsable:", error);
