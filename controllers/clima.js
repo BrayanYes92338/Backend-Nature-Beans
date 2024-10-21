@@ -22,16 +22,31 @@ const httpClima = {
     },
     getClimaActivo: async (req, res) => {
         const climaActivo = await Clima.find({ estado: 1 })
+        .populate({
+            path: 'idEmpleado'
+        }) .populate({
+            path: 'idFinca'
+        });
         res.json({ climaActivo })
     },
     getClimaInactivo: async (req, res) => {
         const climaInactivo = await Clima.find({ estado: 0 })
+        .populate({
+            path: 'idEmpleado'
+        }) .populate({
+            path: 'idFinca'
+        });
         res.json({ climaInactivo })
     },
     getClimaTipo: async (req,res) => {
         try {
             const { tipoClima } = req.params;
             const ti = await Clima.find({tipoClima})
+            .populate({
+                path: 'idEmpleado'
+            }) .populate({
+                path: 'idFinca'
+            });
             res.json(ti)
         } catch (error) {
             res.status(500).json({ mensaje: 'No se encontro el tipo de clima' });
@@ -52,7 +67,11 @@ const httpClima = {
                     $lte: new Date(fechaFin)
                 }
             })
-            
+            .populate({
+                path: 'idEmpleado'
+            }) .populate({
+                path: 'idFinca'
+            });     
        
             if(documentos.length === 0) {
                 res.json({ message: "No se encontro ningun clima entre esas fechas"})

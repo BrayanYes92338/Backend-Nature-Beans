@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const PreparacionSueloSchema = new mongoose.Schema({
     fecha:{type:Date, default:Date.now},
     idParcela:{type:mongoose.Schema.Types.ObjectId,ref:'Parcela',required:true},
-    operario:{type:mongoose.Schema.Types.ObjectId,ref:'Empleado',required:true},
+    idEmpleadooperario:{type:mongoose.Schema.Types.ObjectId,ref:'Empleado',required:true},
     productos:[{  
-        ingredienteActivo:{type:String,required:true},
-        dosis:{type:String,required:true},
-        metodoAplicacion:{type:String,required:true},
+        ingredienteActivo:{type:String,default:""},
+        dosis:{type:String,default:""},
+        metodoAplicacion:{type:String,default:""},
     }],
     observaciones:{type:String,required:true},
 })

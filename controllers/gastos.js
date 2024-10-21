@@ -10,6 +10,25 @@ const httpGastos = {
         const siem = await Gastos.find({
             $or:[{numerofactura: new RegExp(buscar, "i")}]
         })
+        .populate({
+            path: 'idFinca'  
+        })
+        .populate({
+            path: 'semillas.idSemilla',  
+           
+        })
+        .populate({
+            path: 'semillas.idProveedor', 
+           
+        })
+        .populate({
+            path: 'insumo.idInsumo', 
+           
+        })
+        .populate({
+            path: 'insumo.idProveedorInsumo', 
+           
+        })
         res.json({siem})
     },
     getGastosID: async (req ,res)=>{
@@ -71,47 +90,101 @@ const httpGastos = {
            res.status(500).json({ mensaje: 'No se pudo realizar la peticion' });
         }
     },
-    postGastos: async (req, res)=>{
-        try{
-            const {idFinca,nombre,semillas,insumo,numerofactura,descripcion} = req.body;
-            
-
-            for (const o of semillas) {
-                
-                let dataSemilla = parseInt(o.cantidad) * parseInt(o.precio)
-
-                o.total = dataSemilla
-            }
-
-            
-
-
-            for (const e of insumo) {
-
-                if(e.idInsumo){
-                    const dataInsumo = await  Insumo.findById(e.idInsumo)
+    postGastos: async (req, res) => {
+        try {
+            const { idFinca, nombre, semillas = [], insumo = [], numerofactura, descripcion } = req.body;
     
-                    e.unidad = dataInsumo.unidad
-                    e.cantidad = dataInsumo.cantidad
-                    e.total = dataInsumo.total
+            // Si hay semillas, iterar sobre ellas para calcular totalSemilla
+            if (Array.isArray(semillas) && semillas.length > 0) {
+                for (const o of semillas) {
+                    let dataSemilla = parseInt(o.cantidadSemilla) * parseInt(o.precioSemilla);
+                    o.totalSemilla = dataSemilla;
                 }
-
             }
-
-            const siem = new Gastos({idFinca,nombre,semillas,insumo,numerofactura,descripcion}) 
-            await siem.save()
-            res.json({siem})
-
-        }catch(error){
-            console.log(error)
-            res.status(400).json({msg: 'Error no se pudo agregar los Gastos'})
+    
+            // Si hay insumos, iterar sobre ellos para actualizar la información
+            if (Array.isArray(insumo) && insumo.length > 0) {
+                for (const e of insumo) {
+                    let stock = 0;
+    
+                    if (e.idInsumo) {
+                        const dataInsumo = await Insumo.findById(e.idInsumo);
+    
+                        // Actualizar correctamente la cantidad y el stock
+                        let cantidadSolicitada = parseInt(e.cantidadInsumo);
+    
+                        if (dataInsumo.cantidad >= cantidadSolicitada) {
+                            stock = dataInsumo.cantidad - cantidadSolicitada; // Restar la cantidad solicitada
+                            dataInsumo.cantidad = stock; // Actualizar el stock en la base de datos
+                            await dataInsumo.save();
+    
+                            // Asegurarse de no sobrescribir e.cantidadInsumo con el stock
+                            e.totalInsumo = cantidadSolicitada * dataInsumo.precio;
+                        } else {
+                            // Si no hay suficiente stock, retornar un error o manejarlo de alguna manera
+                            return res.status(400).json({ msg: `No hay suficiente stock para el insumo ${dataInsumo.nombre}` });
+                        }
+                    }
+                }
+            }
+    
+            // Crear el nuevo gasto
+            const siem = new Gastos({ idFinca, nombre, semillas, insumo, numerofactura, descripcion });
+            await siem.save();
+            res.json({ siem });
+    
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({ msg: 'Error no se pudo agregar los Gastos' });
         }
     },
-    putGastos: async (req ,res)=>{
-        const {id}=req.params;
-        const {idFinca,...resto} = req.body;
-        const siem = await Gastos.findByIdAndUpdate(id, {idFinca, ...resto}, {new:true})
-        res.json({siem})
+    putGastos: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { idFinca, semillas = [], insumo = [], ...resto } = req.body;
+    
+            // Si hay semillas, iterar sobre ellas para recalcular totalSemilla
+            if (Array.isArray(semillas) && semillas.length > 0) {
+                for (const o of semillas) {
+                    let dataSemilla = parseInt(o.cantidadSemilla) * parseInt(o.precioSemilla);
+                    o.totalSemilla = dataSemilla;
+                }
+            }
+    
+            // Si hay insumos, iterar sobre ellos para actualizar la información
+            if (Array.isArray(insumo) && insumo.length > 0) {
+                for (const e of insumo) {
+                    let stock = 0;
+    
+                    if (e.idInsumo) {
+                        const dataInsumo = await Insumo.findById(e.idInsumo);
+    
+                        // Actualizar correctamente la cantidad y el stock
+                        let cantidadSolicitada = parseInt(e.cantidadInsumo);
+    
+                        if (dataInsumo.cantidad >= cantidadSolicitada) {
+                            stock = dataInsumo.cantidad - cantidadSolicitada; // Restar la cantidad solicitada
+                            dataInsumo.cantidad = stock; // Actualizar el stock en la base de datos
+                            await dataInsumo.save();
+    
+                            // Asegurarse de no sobrescribir e.cantidadInsumo con el stock
+                            e.totalInsumo = cantidadSolicitada * dataInsumo.precio;
+                        } else {
+                            // Si no hay suficiente stock, retornar un error o manejarlo de alguna manera
+                            return res.status(400).json({ msg: `No hay suficiente stock para el insumo ${dataInsumo.nombre}` });
+                        }
+                    }
+                }
+            }
+    
+            // Actualizar el gasto
+            const siem = await Gastos.findByIdAndUpdate(id, { idFinca, semillas, insumo, ...resto }, { new: true });
+            res.json({ siem });
+    
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({ msg: 'Error no se pudo actualizar los Gastos' });
+        }
     },
 }
 

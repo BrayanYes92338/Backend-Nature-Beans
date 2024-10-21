@@ -9,8 +9,9 @@ const SemillaSchema = new mongoose.Schema({
     especie:{type: String,required:true},
     numLote:{type: String,required:true},
     origen:{type: String,required:true},
-    poderGerminativo:{type: String,required:true}
-})
+    poderGerminativo:{type: String,required:true},
+    estado:{type:Number,default:1}
+}) 
 
 export default mongoose.model("Semilla", SemillaSchema)
 

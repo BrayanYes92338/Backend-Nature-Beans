@@ -1,29 +1,19 @@
 import Semilla from "../models/semillas.js";
 const httpSemillas = {
   getSemillas: async (req, res) => {
-    const semilla = await Semilla.find()
-    .populate({
+    const semilla = await Semilla.find().populate({
       path: 'idFinca'
   });
     res.json({ semilla });
   },
   
   getSemillaActiva: async (req, res) => {
-    try {
-      const semillaActiva = await Semilla.find({ estado: 1 });
-      res.json({ semilla: semillaActiva });
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener semilla activa' });
-    }
+    const semillaActiva = await Semilla.find({ estado: 1 })
+    res.json({semillaActiva})
   },
   geSemillaInactiva: async (req, res) => {
-    try {
-      const semillaInactiva = await Semilla.find({ estado: 0 });
-      res.json({ semilla: semillaInactiva });
-
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener semilla inactiva' });
-    }
+   const semillaInactiva = await Semilla.find({ estado: 0 })
+   res.json({semillaInactiva})
   },
 
   getSemillaID: async (req, res) => {
@@ -34,7 +24,7 @@ const httpSemillas = {
   getSemillasProveedores:async (req, res) => { 
     const { idFinca } = req.params;
     try {
-      const semilla = await Semilla.find(idFinca).populate("idProveedor")
+      const semilla = await Semilla.find(idFinca).populate("idFinca")
 
       res.json({semilla});
     } catch (error) {

@@ -9,11 +9,17 @@ const httpSiembra = {
         })
         .populate({
             path:'idCultivo'
+        }).populate({
+            path:'idSemilla'
+        }).populate({
+            path:'idEmpleados'
+        }).populate({
+            path:'cultivoAnterior'
         });
         res.json({siem})
     },
     getSiembraID: async (req ,res)=>{
-        const {id}= req.params;
+        const {id}= req.params;      
         const siem = await Siembra.findById(id);
         res.json({siem})
     },

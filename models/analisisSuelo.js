@@ -5,7 +5,7 @@ const analisisSueloSchema=new mongoose.Schema({
     idEmpleado:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"Empleado"},
     muestra:{type:String,required:true},
     laboratorio:{type:String,requerid:true},
-    resultados:[{}],
+    resultados:{type:String,requerid:true},
     recomendaciones:{type:String},
     fecha:{type:Date,default:Date.now},
 })
