@@ -12,7 +12,7 @@ const facturaSchema = new mongoose.Schema({
         cantidad: { type: Number, required: true }, 
         iva: { type: Number, default: 0, required: true },
         subtotal: { type: Number, default: 0 }
-    }]
+    }]         
 });
 
 export default mongoose.model("Factura", facturaSchema);

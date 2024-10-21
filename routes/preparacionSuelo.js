@@ -79,4 +79,4 @@ preparacion.put(
   httpPreparacionSuelo.putPreparacionSuelo
 );
 preparacion.get("/fechas", httpPreparacionSuelo.getPreparacionEntreFechas);
-export default preparacion;
+export default preparacion

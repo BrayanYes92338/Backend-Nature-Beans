@@ -23,7 +23,6 @@ router.get("/listar/total",[],httpFactura.getFacturaValor)
 
 router.post('/agregar',[
     check('idComprador', 'idComprador no puede estar vacio').notEmpty(),
-    check('loteComercialnum', 'loteComercialnum no puede estar vacio').notEmpty(),
     check('detalle', 'detalle no puede estar vacio').notEmpty(),
     validarCampos
 ],httpFactura.postFactura)
